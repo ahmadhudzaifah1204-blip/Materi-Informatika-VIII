@@ -1,0 +1,1837 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Belajar Interaktif Informatika Kelas VIII — SMP AL-AKHYAR</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#312e81',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbar & subtle transitions */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        .tab-active {
+            background-color: #4f46e5;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+        }
+        .subtab-active {
+            border-bottom: 3px solid #4f46e5;
+            color: #4f46e5;
+            background-color: #eef2ff;
+        }
+        @keyframes popIn {
+            0% { transform: scale(0.92); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .animate-pop {
+            animation: popIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
+
+    <!-- ================= HEADER & NAVIGASI UTAMA ================= -->
+    <header class="bg-gradient-to-r from-indigo-900 via-indigo-800 to-blue-800 text-white shadow-lg sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                <div class="flex items-center gap-3">
+                    <div class="w-11 h-11 rounded-2xl bg-amber-400 text-indigo-950 flex items-center justify-center shadow-md shrink-0">
+                        <i data-lucide="cpu" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <h1 class="text-lg sm:text-xl font-extrabold tracking-tight">Media Belajar Interaktif Informatika Kelas VIII</h1>
+                            <span class="px-2 py-0.5 text-[11px] font-bold uppercase tracking-wider bg-teal-400/20 text-teal-200 border border-teal-400/30 rounded-full">Kurikulum Merdeka</span>
+                        </div>
+                        <p class="text-xs sm:text-sm text-indigo-200 font-medium">SMP AL-AKHYAR • Semester 1 (Ganjil) • Fase D (Bab I – Bab IV)</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 text-xs bg-white/10 px-3 py-1.5 rounded-xl border border-white/15 self-start md:self-auto">
+                    <i data-lucide="award" class="w-4 h-4 text-amber-300"></i>
+                    <span>Target KKTP: <strong class="text-amber-300">75</strong></span>
+                </div>
+            </div>
+
+            <!-- Navigasi Tab Utama -->
+            <nav class="mt-4 flex gap-2 overflow-x-auto pb-1 no-scrollbar" aria-label="Navigasi Utama">
+                <button onclick="switchMainTab('materi')" id="nav-materi" class="tab-active flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all">
+                    <i data-lucide="book-open" class="w-4 h-4"></i>
+                    <span>Ringkasan Materi & Simulator (Bab I - IV)</span>
+                </button>
+                <button onclick="switchMainTab('pg')" id="nav-pg" class="bg-white/10 hover:bg-white/20 text-white flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all">
+                    <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+                    <span>Latihan Pilihan Ganda (40 Soal)</span>
+                </button>
+                <button onclick="switchMainTab('uraian')" id="nav-uraian" class="bg-white/10 hover:bg-white/20 text-white flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all">
+                    <i data-lucide="pen-tool" class="w-4 h-4"></i>
+                    <span>Latihan Uraian & Rubrik (10 Soal)</span>
+                </button>
+                <button onclick="switchMainTab('kisikisi')" id="nav-kisikisi" class="bg-white/10 hover:bg-white/20 text-white flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all">
+                    <i data-lucide="clipboard-list" class="w-4 h-4"></i>
+                    <span>Kisi-Kisi Asesmen</span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ================= KONTEN UTAMA ================= -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+        <!-- =================================================================== -->
+        <!-- TAB 1: RINGKASAN MATERI & SIMULATOR INTERAKTIF (BAB I - IV)         -->
+        <!-- =================================================================== -->
+        <section id="section-materi" class="space-y-6 animate-pop">
+            <!-- Sub-tab Bab I - IV -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-2 grid grid-cols-2 lg:grid-cols-4 gap-2">
+                <button onclick="switchBab(1)" id="btn-bab-1" class="subtab-active p-3 rounded-xl text-left transition-all flex items-start gap-3">
+                    <span class="w-8 h-8 rounded-lg bg-indigo-600 text-white font-bold flex items-center justify-center shrink-0 text-sm">I</span>
+                    <div>
+                        <div class="text-xs font-bold uppercase text-indigo-600">Bab I</div>
+                        <div class="text-xs sm:text-sm font-bold text-slate-800 leading-tight">Informatika & Keterampilannya</div>
+                    </div>
+                </button>
+                <button onclick="switchBab(2)" id="btn-bab-2" class="hover:bg-slate-50 p-3 rounded-xl text-left transition-all flex items-start gap-3 text-slate-600">
+                    <span class="w-8 h-8 rounded-lg bg-teal-600 text-white font-bold flex items-center justify-center shrink-0 text-sm">II</span>
+                    <div>
+                        <div class="text-xs font-bold uppercase text-teal-600">Bab II</div>
+                        <div class="text-xs sm:text-sm font-bold text-slate-800 leading-tight">Berpikir Komputasional (BK)</div>
+                    </div>
+                </button>
+                <button onclick="switchBab(3)" id="btn-bab-3" class="hover:bg-slate-50 p-3 rounded-xl text-left transition-all flex items-start gap-3 text-slate-600">
+                    <span class="w-8 h-8 rounded-lg bg-amber-500 text-white font-bold flex items-center justify-center shrink-0 text-sm">III</span>
+                    <div>
+                        <div class="text-xs font-bold uppercase text-amber-600">Bab III</div>
+                        <div class="text-xs sm:text-sm font-bold text-slate-800 leading-tight">Teknologi Informasi & Komunikasi</div>
+                    </div>
+                </button>
+                <button onclick="switchBab(4)" id="btn-bab-4" class="hover:bg-slate-50 p-3 rounded-xl text-left transition-all flex items-start gap-3 text-slate-600">
+                    <span class="w-8 h-8 rounded-lg bg-rose-600 text-white font-bold flex items-center justify-center shrink-0 text-sm">IV</span>
+                    <div>
+                        <div class="text-xs font-bold uppercase text-rose-600">Bab IV</div>
+                        <div class="text-xs sm:text-sm font-bold text-slate-800 leading-tight">Sistem Komputer & JKI Dasar</div>
+                    </div>
+                </button>
+            </div>
+
+            <!-- KONTEN BAB I -->
+            <div id="content-bab-1" class="space-y-6">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Ringkasan Materi Bab I -->
+                    <div class="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-200 p-6 space-y-5">
+                        <div class="border-b border-slate-100 pb-4">
+                            <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700">BAB I • ELEMEN UMUM & LITERASI</span>
+                            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 mt-2">Informatika dan Keterampilannya</h2>
+                            <p class="text-sm text-slate-600 mt-1">Memahami pilar ilmu Informatika, kolaborasi proyek kelompok, komunikasi visual, serta peran manusia di era Industri 4.0 dan Society 5.0.</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="p-4 rounded-xl bg-indigo-50/70 border border-indigo-100">
+                                <h3 class="font-bold text-indigo-900 text-sm flex items-center gap-2">
+                                    <i data-lucide="layers" class="w-4 h-4 text-indigo-600"></i> 1. Ruang Lingkup Informatika
+                                </h3>
+                                <p class="text-xs text-slate-700 mt-2 leading-relaxed">
+                                    <strong>Berpikir Komputasional (BK)</strong> merupakan landasan utama (fondasi) yang menopang seluruh elemen Informatika lainnya: <strong>TIK</strong> (Teknologi Informasi & Komunikasi), <strong>SK</strong> (Sistem Komputer), <strong>JKI</strong> (Jaringan Komputer & Internet), <strong>AD</strong> (Analisis Data), <strong>AP</strong> (Algoritma Pemrograman), <strong>DSI</strong> (Dampak Sosial Informatika), dan <strong>PLB</strong> (Praktik Lintas Bidang).
+                                </p>
+                            </div>
+
+                            <div class="p-4 rounded-xl bg-teal-50/70 border border-teal-100">
+                                <h3 class="font-bold text-teal-900 text-sm flex items-center gap-2">
+                                    <i data-lucide="users" class="w-4 h-4 text-teal-600"></i> 2. Profil Pelajar Pancasila & Kolaborasi
+                                </h3>
+                                <p class="text-xs text-slate-700 mt-2 leading-relaxed">
+                                    Dalam kerja kelompok yang heterogen, setiap anggota menyumbang keahlian berbeda untuk mencapai tujuan bersama — ini mencerminkan dimensi <strong>Bergotong Royong</strong> (kolaborasi) dan <strong>Bernalar Kritis</strong> dalam memecahkan masalah.
+                                </p>
+                            </div>
+
+                            <div class="p-4 rounded-xl bg-amber-50/70 border border-amber-100">
+                                <h3 class="font-bold text-amber-900 text-sm flex items-center gap-2">
+                                    <i data-lucide="list-ordered" class="w-4 h-4 text-amber-600"></i> 3. Urutan Perencanaan Proyek
+                                </h3>
+                                <ol class="text-xs text-slate-700 mt-2 space-y-1 list-decimal list-inside">
+                                    <li><strong>Identifikasi masalah</strong> & tujuan proyek</li>
+                                    <li><strong>Pembagian tugas</strong> & peran anggota tim</li>
+                                    <li><strong>Penyusunan jadwal</strong> kerja (timeline)</li>
+                                    <li><strong>Pelaksanaan & evaluasi</strong> hasil karya</li>
+                                </ol>
+                            </div>
+
+                            <div class="p-4 rounded-xl bg-rose-50/70 border border-rose-100">
+                                <h3 class="font-bold text-rose-900 text-sm flex items-center gap-2">
+                                    <i data-lucide="globe" class="w-4 h-4 text-rose-600"></i> 4. Industri 4.0 vs Society 5.0
+                                </h3>
+                                <p class="text-xs text-slate-700 mt-2 leading-relaxed">
+                                    <strong>Industri 4.0</strong> berfokus pada otomatisasi mesin, IoT, dan kecerdasan buatan (AI). Sedangkan <strong>Society 5.0</strong> menempatkan <strong>manusia sebagai pusat (human-centered)</strong> yang memanfaatkan teknologi cerdas untuk menyelesaikan masalah sosial dan meningkatkan kualitas hidup.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-100 border border-slate-200 flex items-start gap-3">
+                            <i data-lucide="pie-chart" class="w-5 h-5 text-indigo-600 shrink-0 mt-0.5"></i>
+                            <div class="text-xs text-slate-700">
+                                <strong>Komunikasi Visual (Infografis):</strong> Ringkasan hasil kerja kelompok paling efektif disajikan dalam bentuk <strong>infografis</strong> karena memadukan teks singkat, ikon, dan grafik sehingga cepat dipahami audiens dibandingkan paragraf panjang yang monoton.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Simulator Bab I: Papan Kanban Interaktif -->
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 flex flex-col">
+                        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                            <div>
+                                <span class="text-[11px] font-bold uppercase tracking-wider text-indigo-600">Simulator Praktik</span>
+                                <h3 class="font-extrabold text-slate-900 text-base">Papan Kanban Kelompok</h3>
+                            </div>
+                            <span class="p-2 rounded-xl bg-indigo-50 text-indigo-600"><i data-lucide="kanban" class="w-5 h-5"></i></span>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-2">Kelola alur kerja proyek Informatika timmu dengan memindahkan kartu tugas antar kolom!</p>
+
+                        <!-- Form Tambah Tugas -->
+                        <div class="mt-3 flex gap-2">
+                            <input type="text" id="kanban-input" placeholder="Tulis tugas baru (misal: Buat Infografis)..." class="flex-1 text-xs px-3 py-2 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            <button onclick="addKanbanTask()" class="px-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl transition-colors shrink-0">
+                                + Tambah
+                            </button>
+                        </div>
+
+                        <!-- Kolom Kanban -->
+                        <div class="mt-4 space-y-3 flex-1 overflow-y-auto max-h-[380px] pr-1">
+                            <!-- To Do -->
+                            <div class="bg-slate-100/80 p-3 rounded-xl border border-slate-200">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+                                        <span class="w-2 h-2 rounded-full bg-rose-500"></span> To Do (Akan Dikerjakan)
+                                    </span>
+                                    <span id="count-todo" class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-white text-slate-600">0</span>
+                                </div>
+                                <div id="list-todo" class="space-y-2"></div>
+                            </div>
+
+                            <!-- Doing -->
+                            <div class="bg-amber-50/70 p-3 rounded-xl border border-amber-200/80">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-xs font-bold text-amber-900 flex items-center gap-1.5">
+                                        <span class="w-2 h-2 rounded-full bg-amber-500"></span> Doing (Sedang Dikerjakan)
+                                    </span>
+                                    <span id="count-doing" class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-white text-amber-700">0</span>
+                                </div>
+                                <div id="list-doing" class="space-y-2"></div>
+                            </div>
+
+                            <!-- Done -->
+                            <div class="bg-emerald-50/70 p-3 rounded-xl border border-emerald-200/80">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-xs font-bold text-emerald-900 flex items-center gap-1.5">
+                                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Done (Selesai)
+                                    </span>
+                                    <span id="count-done" class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-white text-emerald-700">0</span>
+                                </div>
+                                <div id="list-done" class="space-y-2"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KONTEN BAB II -->
+            <div id="content-bab-2" class="hidden space-y-6">
+                <!-- Ringkasan Materi Bab II -->
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 space-y-4">
+                    <div class="border-b border-slate-100 pb-3">
+                        <span class="px-3 py-1 rounded-full text-xs font-bold bg-teal-100 text-teal-700">BAB II • BERPIKIR KOMPUTASIONAL (BK)</span>
+                        <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 mt-2">Fungsi, Himpunan, Sistem Bilangan, & Struktur Data</h2>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="p-4 rounded-xl bg-teal-50/70 border border-teal-100">
+                            <h3 class="font-bold text-teal-900 text-sm">1. Konsep Fungsi</h3>
+                            <p class="text-xs text-slate-700 mt-1.5 leading-relaxed">
+                                Memetakan <strong>Input (Domain)</strong> melalui aturan proses tertentu menjadi satu <strong>Output (Range)</strong>. Contoh: jika <code>f(x) = 3x + 2</code> dan input <code>x = 4</code>, maka output = <code>3(4) + 2 = 14</code>.
+                            </p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-indigo-50/70 border border-indigo-100">
+                            <h3 class="font-bold text-indigo-900 text-sm">2. Sistem Bilangan</h3>
+                            <p class="text-xs text-slate-700 mt-1.5 leading-relaxed">
+                                • <strong>Desimal (Basis 10):</strong> 0–9<br>
+                                • <strong>Biner (Basis 2):</strong> 0 dan 1 (bahasa mesin)<br>
+                                • <strong>Oktal (Basis 8):</strong> 0–7<br>
+                                Konversi dilakukan dengan <strong>pembagian berulang</strong> oleh basis tujuan dan membaca sisa bagi dari bawah ke atas.
+                            </p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-amber-50/70 border border-amber-100">
+                            <h3 class="font-bold text-amber-900 text-sm">3. Stack (Tumpukan) & Queue (Antrean)</h3>
+                            <p class="text-xs text-slate-700 mt-1.5 leading-relaxed">
+                                • <strong>Stack (LIFO):</strong> <em>Last In, First Out</em> (contoh: fitur <em>Undo</em>, tumpukan piring).<br>
+                                • <strong>Queue (FIFO):</strong> <em>First In, First Out</em> (contoh: antrean cetak printer, antrean kasir).
+                            </p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-purple-50/70 border border-purple-100">
+                            <h3 class="font-bold text-purple-900 text-sm">4. Himpunan & Logika</h3>
+                            <p class="text-xs text-slate-700 mt-1.5 leading-relaxed">
+                                • <strong>Irisan (A ∩ B):</strong> Anggota yang ada di A <em>dan</em> B sekaligus.<br>
+                                • <strong>Gabungan (A ∪ B):</strong> Seluruh anggota A <em>atau</em> B digabung tanpa duplikasi.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3 Simulator Interaktif Bab II -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Simulator 2A: Mesin Fungsi -->
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 flex flex-col justify-between">
+                        <div>
+                            <span class="text-[11px] font-bold uppercase tracking-wider text-teal-600">Simulator 2.1</span>
+                            <h3 class="font-extrabold text-slate-900 text-base">Mesin Fungsi Interaktif</h3>
+                            <p class="text-xs text-slate-500 mt-1">Pilih rumus fungsi, masukkan nilai input (x), dan amati proses komputasinya.</p>
+
+                            <div class="mt-4 space-y-3">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 mb-1">Pilih Rumus Fungsi:</label>
+                                    <select id="func-formula" onchange="runFunctionMachine()" class="w-full text-xs font-mono font-bold p-2.5 rounded-xl border border-slate-300 bg-slate-50 focus:ring-2 focus:ring-teal-500">
+                                        <option value="linear">f(x) = 3x + 2</option>
+                                        <option value="quadratic">g(x) = 2x² - 3</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 mb-1">Masukkan Nilai Input (x):</label>
+                                    <input type="number" id="func-input" value="4" oninput="runFunctionMachine()" class="w-full text-sm font-mono font-bold p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-teal-500">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Visual Mesin Input -> Proses -> Output -->
+                        <div class="mt-5 p-4 rounded-xl bg-slate-900 text-white space-y-3">
+                            <div class="flex items-center justify-between text-xs">
+                                <span class="px-2.5 py-1 rounded-lg bg-teal-500/20 text-teal-300 font-mono">INPUT: x = <span id="fm-in">4</span></span>
+                                <i data-lucide="arrow-right" class="w-4 h-4 text-slate-400"></i>
+                                <span class="px-2.5 py-1 rounded-lg bg-amber-500/20 text-amber-300 font-mono font-bold">OUTPUT: <span id="fm-out">14</span></span>
+                            </div>
+                            <div class="p-3 rounded-lg bg-slate-800 border border-slate-700 font-mono text-xs text-emerald-300" id="fm-steps">
+                                f(4) = 3(4) + 2 = 12 + 2 = 14
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Simulator 2B: Konverter Sistem Bilangan Step-by-Step -->
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 flex flex-col justify-between">
+                        <div>
+                            <span class="text-[11px] font-bold uppercase tracking-wider text-indigo-600">Simulator 2.2</span>
+                            <h3 class="font-extrabold text-slate-900 text-base">Konverter Bilangan Step-by-Step</h3>
+                            <p class="text-xs text-slate-500 mt-1">Masukkan bilangan Desimal (misal: 13, 25, 29) untuk melihat pembagian berulang.</p>
+
+                            <div class="mt-3 flex gap-2">
+                                <input type="number" id="dec-input" value="25" min="0" max="1024" oninput="convertNumberSteps()" class="w-full text-sm font-mono font-bold p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500">
+                                <button onclick="setDecSample(13)" class="px-2.5 py-1.5 text-xs font-mono font-bold bg-slate-100 hover:bg-slate-200 rounded-xl">13</button>
+                                <button onclick="setDecSample(25)" class="px-2.5 py-1.5 text-xs font-mono font-bold bg-slate-100 hover:bg-slate-200 rounded-xl">25</button>
+                                <button onclick="setDecSample(29)" class="px-2.5 py-1.5 text-xs font-mono font-bold bg-slate-100 hover:bg-slate-200 rounded-xl">29</button>
+                            </div>
+
+                            <div class="mt-3 grid grid-cols-2 gap-2 text-center">
+                                <div class="p-2.5 rounded-xl bg-indigo-50 border border-indigo-200">
+                                    <div class="text-[11px] font-bold text-indigo-600">BINER (Basis 2)</div>
+                                    <div id="res-biner" class="text-base font-mono font-extrabold text-indigo-950 mt-0.5">11001</div>
+                                </div>
+                                <div class="p-2.5 rounded-xl bg-teal-50 border border-teal-200">
+                                    <div class="text-[11px] font-bold text-teal-600">OKTAL (Basis 8)</div>
+                                    <div id="res-oktal" class="text-base font-mono font-extrabold text-teal-950 mt-0.5">31</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-3 bg-slate-50 border border-slate-200 rounded-xl p-3 max-h-44 overflow-y-auto">
+                            <div class="text-[11px] font-bold text-slate-500 uppercase mb-1.5">Langkah Pembagian Berulang:</div>
+                            <div id="conversion-steps" class="font-mono text-[11px] text-slate-700 space-y-1"></div>
+                        </div>
+                    </div>
+
+                    <!-- Simulator 2C: Stack (LIFO) & Queue (FIFO) -->
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 flex flex-col justify-between">
+                        <div>
+                            <span class="text-[11px] font-bold uppercase tracking-wider text-amber-600">Simulator 2.3</span>
+                            <h3 class="font-extrabold text-slate-900 text-base">Visualisasi Stack & Queue</h3>
+                            <p class="text-xs text-slate-500 mt-1">Bandingkan cara keluar-masuk data pada Stack (LIFO) dan Queue (FIFO).</p>
+
+                            <!-- Stack Section -->
+                            <div class="mt-3 p-3 rounded-xl bg-amber-50/60 border border-amber-200">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-xs font-extrabold text-amber-900">STACK (LIFO - Tumpukan)</span>
+                                    <div class="flex gap-1.5">
+                                        <button onclick="pushStack()" class="px-2.5 py-1 bg-amber-500 hover:bg-amber-600 text-white text-[11px] font-bold rounded-lg">Push</button>
+                                        <button onclick="popStack()" class="px-2.5 py-1 bg-rose-500 hover:bg-rose-600 text-white text-[11px] font-bold rounded-lg">Pop</button>
+                                    </div>
+                                </div>
+                                <div id="stack-visual" class="flex flex-col-reverse gap-1 min-h-[84px] p-2 bg-white rounded-lg border border-amber-200/80 justify-start items-center">
+                                    <!-- Filled by JS -->
+                                </div>
+                            </div>
+
+                            <!-- Queue Section -->
+                            <div class="mt-3 p-3 rounded-xl bg-sky-50/60 border border-sky-200">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-xs font-extrabold text-sky-900">QUEUE (FIFO - Antrean)</span>
+                                    <div class="flex gap-1.5">
+                                        <button onclick="enqueueData()" class="px-2.5 py-1 bg-sky-600 hover:bg-sky-700 text-white text-[11px] font-bold rounded-lg">Enqueue</button>
+                                        <button onclick="dequeueData()" class="px-2.5 py-1 bg-rose-500 hover:bg-rose-600 text-white text-[11px] font-bold rounded-lg">Dequeue</button>
+                                    </div>
+                                </div>
+                                <div id="queue-visual" class="flex gap-1.5 min-h-[42px] p-2 bg-white rounded-lg border border-sky-200/80 items-center overflow-x-auto">
+                                    <!-- Filled by JS -->
+                                </div>
+                            </div>
+                        </div>
+                        <div id="sq-status" class="mt-2 text-[11px] font-medium text-slate-600 italic text-center">Klik tombol Push/Pop atau Enqueue/Dequeue.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KONTEN BAB III -->
+            <div id="content-bab-3" class="hidden space-y-6">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Ringkasan Materi Bab III -->
+                    <div class="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-200 p-6 space-y-5">
+                        <div class="border-b border-slate-100 pb-4">
+                            <span class="px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800">BAB III • TEKNOLOGI INFORMASI & KOMUNIKASI (TIK)</span>
+                            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 mt-2">Integrasi Aplikasi Perkantoran, Mail Merge, & Virtual Lab</h2>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="p-4 rounded-xl bg-amber-50/70 border border-amber-100">
+                                <h3 class="font-bold text-amber-900 text-sm">1. Karakteristik Objek Perkantoran</h3>
+                                <ul class="text-xs text-slate-700 mt-2 space-y-1.5">
+                                    <li>• <strong>Pengolah Kata (Word):</strong> Mengelola dokumen teks, paragraf, dan tata letak laporan.</li>
+                                    <li>• <strong>Pengolah Angka (Excel):</strong> Mengelola data dalam struktur <strong>sel, baris, dan kolom</strong>, rumus matematika, serta grafik.</li>
+                                    <li>• <strong>Presentasi (PowerPoint):</strong> Menyajikan poin visual pada slide dengan animasi/transisi.</li>
+                                </ul>
+                            </div>
+
+                            <div class="p-4 rounded-xl bg-indigo-50/70 border border-indigo-100">
+                                <h3 class="font-bold text-indigo-900 text-sm">2. Integrasi Objek (Paste Link)</h3>
+                                <p class="text-xs text-slate-700 mt-2 leading-relaxed">
+                                    Saat menyalin tabel atau grafik dari Excel ke Word, gunakan opsi <strong>Paste Link (Keep Source Formatting & Link Data)</strong> agar apabila data di Excel diperbarui, grafik di laporan Word ikut ter-update otomatis tanpa membuat ulang!
+                                </p>
+                            </div>
+
+                            <div class="p-4 rounded-xl bg-teal-50/70 border border-teal-100">
+                                <h3 class="font-bold text-teal-900 text-sm">3. Fitur Mail Merge (Surat Massal)</h3>
+                                <p class="text-xs text-slate-700 mt-2 leading-relaxed">
+                                    Digunakan untuk membuat puluhan/ratusan dokumen personal (kartu ujian, sertifikat, surat undangan) secara otomatis dengan menggabungkan:
+                                    <br>• <strong>Main Document:</strong> Template surat utama.
+                                    <br>• <strong>Data Source:</strong> Tabel daftar penerima (Excel/CSV).
+                                    <br>• <strong>Merge Field:</strong> Penanda kolom seperti <code>&lt;&lt;Nama_Siswa&gt;&gt;</code>.
+                                </p>
+                            </div>
+
+                            <div class="p-4 rounded-xl bg-sky-50/70 border border-sky-100">
+                                <h3 class="font-bold text-sky-900 text-sm">4. Laboratorium Maya (Virtual Lab)</h3>
+                                <p class="text-xs text-slate-700 mt-2 leading-relaxed">
+                                    Simulasi eksperimen sains/informatika berbasis komputer (seperti PhET atau Rumah Belajar) yang aman, hemat biaya, bebas risiko kecelakaan alat, dan dapat diulang kapan saja.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Simulator Bab III: Mini Mail Merge -->
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                                <div>
+                                    <span class="text-[11px] font-bold uppercase tracking-wider text-amber-600">Simulator Praktik</span>
+                                    <h3 class="font-extrabold text-slate-900 text-base">Simulator Mini Mail Merge</h3>
+                                </div>
+                                <span class="p-2 rounded-xl bg-amber-50 text-amber-600"><i data-lucide="mail-check" class="w-5 h-5"></i></span>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-2">Klik baris siswa pada <strong>Data Source</strong> untuk melihat perubahan otomatis pada <strong>Main Document</strong>!</p>
+
+                            <!-- Data Source Table -->
+                            <div class="mt-3">
+                                <div class="text-[11px] font-bold text-slate-600 uppercase mb-1">1. Data Source (Tabel Excel):</div>
+                                <div class="overflow-hidden rounded-xl border border-slate-200">
+                                    <table class="w-full text-xs text-left">
+                                        <thead class="bg-slate-100 text-slate-700 font-bold">
+                                            <tr>
+                                                <th class="p-2">No_Peserta</th>
+                                                <th class="p-2">Nama_Siswa</th>
+                                                <th class="p-2">Kelas</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="mailmerge-table" class="divide-y divide-slate-200">
+                                            <!-- Rendered by JS -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Main Document Preview -->
+                        <div class="mt-4">
+                            <div class="text-[11px] font-bold text-slate-600 uppercase mb-1">2. Main Document (Hasil Pratinjau):</div>
+                            <div class="p-4 rounded-xl bg-gradient-to-br from-indigo-50 to-amber-50 border-2 border-dashed border-indigo-300 relative">
+                                <div class="flex items-center justify-between border-b border-indigo-200 pb-2 mb-2">
+                                    <span class="text-[10px] font-extrabold tracking-wider uppercase text-indigo-800">SMP AL-AKHYAR • KARTU ASESMEN</span>
+                                    <span class="px-2 py-0.5 bg-indigo-600 text-white text-[10px] font-mono rounded" id="mm-preview-no">VIII-001</span>
+                                </div>
+                                <div class="space-y-1 text-xs text-slate-700">
+                                    <div>Nama Peserta : <strong id="mm-preview-nama" class="text-indigo-950 font-bold bg-amber-200/70 px-1.5 py-0.5 rounded">Ahmad Zaki</strong></div>
+                                    <div>Kelas / Ruang : <strong id="mm-preview-kelas" class="text-indigo-950 font-bold bg-amber-200/70 px-1.5 py-0.5 rounded">VIII-A</strong></div>
+                                    <div class="text-[11px] text-slate-500 pt-1">Field aktif: <code>&lt;&lt;Nama_Siswa&gt;&gt;</code>, <code>&lt;&lt;Kelas&gt;&gt;</code></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KONTEN BAB IV -->
+            <div id="content-bab-4" class="hidden space-y-6">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Ringkasan Materi Bab IV -->
+                    <div class="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-200 p-6 space-y-5">
+                        <div class="border-b border-slate-100 pb-4">
+                            <span class="px-3 py-1 rounded-full text-xs font-bold bg-rose-100 text-rose-700">BAB IV • SISTEM KOMPUTER (SK) & JKI DASAR</span>
+                            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 mt-2">Arsitektur CPU, Memori, Heksadesimal, & Keamanan Jaringan</h2>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="p-4 rounded-xl bg-rose-50/70 border border-rose-100">
+                                <h3 class="font-bold text-rose-900 text-sm">1. Komponen Utama CPU & Siklus Mesin</h3>
+                                <p class="text-xs text-slate-700 mt-1.5 leading-relaxed">
+                                    • <strong>ALU (Arithmetic Logic Unit):</strong> Melakukan operasi hitung matematika dan logika.<br>
+                                    • <strong>CU (Control Unit):</strong> Mengatur lalu lintas data dan kendali instruksi.<br>
+                                    • <strong>Register & Cache:</strong> Memori super cepat di dalam CPU.<br>
+                                    • <strong>Siklus Instruksi:</strong> <code>Fetch</code> (ambil) → <code>Decode</code> (terjemahkan) → <code>Execute</code> (jalankan).
+                                </p>
+                            </div>
+
+                            <div class="p-4 rounded-xl bg-indigo-50/70 border border-indigo-100">
+                                <h3 class="font-bold text-indigo-900 text-sm">2. Memori Volatile vs Non-Volatile</h3>
+                                <p class="text-xs text-slate-700 mt-1.5 leading-relaxed">
+                                    • <strong>RAM (Volatile):</strong> Menyimpan data sementara saat program berjalan; data <strong>hilang</strong> jika listrik padam.<br>
+                                    • <strong>ROM / SSD / HDD (Non-Volatile):</strong> Menyimpan data secara <strong>permanen</strong> meski komputer dimatikan.
+                                </p>
+                            </div>
+
+                            <div class="p-4 rounded-xl bg-amber-50/70 border border-amber-100">
+                                <h3 class="font-bold text-amber-900 text-sm">3. Heksadesimal (Basis 16)</h3>
+                                <p class="text-xs text-slate-700 mt-1.5 leading-relaxed">
+                                    Digunakan untuk pengalamatan memori & MAC Address. Terdiri dari angka <strong>0–9</strong> dan huruf <strong>A=10, B=11, C=12, D=13, E=14, F=15</strong>.<br>
+                                    Contoh: <code>1A₁₆ = (1 × 16¹) + (10 × 16⁰) = 16 + 10 = 26₁₀</code>.
+                                </p>
+                            </div>
+
+                            <div class="p-4 rounded-xl bg-teal-50/70 border border-teal-100">
+                                <h3 class="font-bold text-teal-900 text-sm">4. Jaringan Lokal (LAN) & Keamanan Wi-Fi</h3>
+                                <p class="text-xs text-slate-700 mt-1.5 leading-relaxed">
+                                    • <strong>LAN:</strong> Jaringan cakupan kecil (lab komputer/sekolah) memakai Switch & kabel UTP/Wi-Fi.<br>
+                                    • <strong>Keamanan Wi-Fi Publik:</strong> Pastikan situs memakai <strong>HTTPS</strong> (terenkripsi), aktifkan <strong>2FA (Two-Factor Authentication)</strong>, dan hindari transaksi perbankan di Wi-Fi terbuka.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Simulator Bab IV: Gerbang Logika Interaktif -->
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                                <div>
+                                    <span class="text-[11px] font-bold uppercase tracking-wider text-rose-600">Simulator ALU / Logika</span>
+                                    <h3 class="font-extrabold text-slate-900 text-base">Gerbang Logika Interaktif</h3>
+                                </div>
+                                <span class="p-2 rounded-xl bg-rose-50 text-rose-600"><i data-lucide="zap" class="w-5 h-5"></i></span>
+                            </div>
+
+                            <!-- Pilih Gerbang -->
+                            <div class="mt-3">
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Pilih Jenis Gerbang Logika:</label>
+                                <div class="grid grid-cols-3 gap-2">
+                                    <button onclick="setGate('AND')" id="gate-btn-AND" class="py-2 rounded-xl text-xs font-extrabold bg-rose-600 text-white shadow">AND</button>
+                                    <button onclick="setGate('OR')" id="gate-btn-OR" class="py-2 rounded-xl text-xs font-extrabold bg-slate-100 text-slate-700 hover:bg-slate-200">OR</button>
+                                    <button onclick="setGate('NOT')" id="gate-btn-NOT" class="py-2 rounded-xl text-xs font-extrabold bg-slate-100 text-slate-700 hover:bg-slate-200">NOT</button>
+                                </div>
+                            </div>
+
+                            <!-- Saklar Input & Lampu Output -->
+                            <div class="mt-4 p-4 rounded-xl bg-slate-900 text-white flex items-center justify-between gap-3">
+                                <div class="space-y-2.5">
+                                    <div class="flex items-center gap-2">
+                                        <button onclick="toggleLogicInput('A')" id="btn-in-A" class="w-12 py-1.5 rounded-lg font-mono font-extrabold text-sm bg-slate-700 text-slate-300 border border-slate-600 transition-all">0</button>
+                                        <span class="text-xs font-bold text-slate-300">Input A</span>
+                                    </div>
+                                    <div id="row-in-B" class="flex items-center gap-2">
+                                        <button onclick="toggleLogicInput('B')" id="btn-in-B" class="w-12 py-1.5 rounded-lg font-mono font-extrabold text-sm bg-slate-700 text-slate-300 border border-slate-600 transition-all">0</button>
+                                        <span class="text-xs font-bold text-slate-300">Input B</span>
+                                    </div>
+                                </div>
+
+                                <div class="text-center">
+                                    <div id="gate-badge" class="px-3 py-1.5 rounded-lg bg-rose-500/20 border border-rose-400/40 font-mono font-extrabold text-rose-300 text-xs">AND</div>
+                                </div>
+
+                                <!-- Lampu Output -->
+                                <div class="flex flex-col items-center">
+                                    <div id="logic-lamp" class="w-12 h-12 rounded-full bg-slate-800 border-2 border-slate-600 flex items-center justify-center transition-all">
+                                        <i data-lucide="lightbulb" class="w-6 h-6 text-slate-500"></i>
+                                    </div>
+                                    <span id="logic-out-text" class="text-xs font-mono font-extrabold mt-1 text-slate-400">OUT: 0</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tabel Kebenaran -->
+                        <div class="mt-4">
+                            <div class="text-[11px] font-bold text-slate-500 uppercase mb-1">Tabel Kebenaran (<span id="tt-title">AND</span>):</div>
+                            <table class="w-full text-xs text-center border border-slate-200 rounded-lg overflow-hidden">
+                                <thead id="tt-head" class="bg-slate-100 font-bold text-slate-700"></thead>
+                                <tbody id="tt-body" class="divide-y divide-slate-200 font-mono"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =================================================================== -->
+        <!-- TAB 2: LATIHAN SOAL PILIHAN GANDA (40 SOAL INTERAKTIF)              -->
+        <!-- =================================================================== -->
+        <section id="section-pg" class="hidden space-y-6 animate-pop">
+            <!-- Panel Kontrol & Skor PG -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 space-y-4">
+                <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                    <div>
+                        <h2 class="text-lg sm:text-xl font-extrabold text-slate-900">Bank Soal Pilihan Ganda (40 Butir Soal)</h2>
+                        <p class="text-xs text-slate-500 mt-0.5">Bobot penilaian sesuai pedoman: <strong>1,5 poin per soal benar</strong> (Skor Maksimal PG = <strong>60 poin</strong>).</p>
+                    </div>
+
+                    <!-- Mode Switcher -->
+                    <div class="flex flex-wrap items-center gap-2">
+                        <div class="inline-flex rounded-xl bg-slate-100 p-1 border border-slate-200">
+                            <button onclick="setPgMode('latihan')" id="mode-latihan" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-indigo-600 text-white shadow-sm transition-all">
+                                Mode Latihan (Langsung Cek)
+                            </button>
+                            <button onclick="setPgMode('ujian')" id="mode-ujian" class="px-3 py-1.5 rounded-lg text-xs font-bold text-slate-600 hover:text-slate-900 transition-all">
+                                Mode Simulasi Ujian
+                            </button>
+                        </div>
+                        <button onclick="resetPgAnswers()" class="px-3 py-2 rounded-xl text-xs font-bold bg-rose-50 text-rose-600 hover:bg-rose-100 border border-rose-200 flex items-center gap-1.5">
+                            <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> Reset
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Filter Bab & Statistik Live -->
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 pt-3 border-t border-slate-100">
+                    <div class="flex flex-wrap gap-1.5">
+                        <button onclick="filterPgBab('ALL')" id="filter-ALL" class="pg-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-indigo-600 text-white">Semua Bab (1–40)</button>
+                        <button onclick="filterPgBab(1)" id="filter-1" class="pg-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200">Bab I (1–10)</button>
+                        <button onclick="filterPgBab(2)" id="filter-2" class="pg-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200">Bab II (11–20)</button>
+                        <button onclick="filterPgBab(3)" id="filter-3" class="pg-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200">Bab III (21–30)</button>
+                        <button onclick="filterPgBab(4)" id="filter-4" class="pg-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200">Bab IV (31–40)</button>
+                    </div>
+
+                    <div class="flex items-center gap-3 bg-indigo-50 px-4 py-2 rounded-xl border border-indigo-100">
+                        <div class="text-xs text-slate-600">Terjawab: <strong id="pg-answered-count" class="text-indigo-900">0/40</strong></div>
+                        <div class="h-4 w-px bg-indigo-200"></div>
+                        <div class="text-xs text-slate-600">Benar: <strong id="pg-correct-count" class="text-emerald-600">0</strong></div>
+                        <div class="h-4 w-px bg-indigo-200"></div>
+                        <div class="text-xs text-slate-600">Skor PG: <strong id="pg-score-val" class="text-indigo-700 text-sm">0.0</strong> <span class="text-[11px]">/ 60</span></div>
+                    </div>
+                </div>
+
+                <!-- Banner Submit Ujian (Muncul saat Mode Ujian) -->
+                <div id="ujian-submit-bar" class="hidden p-3 rounded-xl bg-amber-50 border border-amber-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div class="text-xs text-amber-900">
+                        <strong>Mode Simulasi Ujian Aktif:</strong> Kunci jawaban dan pembahasan disembunyikan sementara hingga kamu menekan tombol Selesai Ujian.
+                    </div>
+                    <button onclick="submitUjianPg()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow shrink-0">
+                        Selesai & Koreksi Ujian
+                    </button>
+                </div>
+            </div>
+
+            <!-- Daftar Soal PG -->
+            <div id="pg-questions-container" class="space-y-4">
+                <!-- Diisi oleh JavaScript -->
+            </div>
+        </section>
+
+        <!-- =================================================================== -->
+        <!-- TAB 3: LATIHAN SOAL URAIAN / ESSAY & RUBRIK (10 SOAL)               -->
+        <!-- =================================================================== -->
+        <section id="section-uraian" class="hidden space-y-6 animate-pop">
+            <!-- Kalkulator Prediksi Nilai Akhir (PG + Uraian) -->
+            <div class="bg-gradient-to-r from-indigo-900 to-blue-900 text-white rounded-2xl shadow-md p-6">
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+                    <div>
+                        <span class="px-2.5 py-1 rounded-full text-[11px] font-bold uppercase bg-amber-400/20 text-amber-300 border border-amber-400/30">Evaluasi Mandiri & Kalkulator Nilai</span>
+                        <h2 class="text-xl font-extrabold mt-2">Latihan Soal Uraian (10 Soal) & Prediksi Nilai Akhir</h2>
+                        <p class="text-xs text-indigo-200 mt-1">Kerjakan setiap soal uraian pada kotak jawaban, buka kunci & rubrik penskoran (0–4 per soal), lalu pilih skor mandiri untuk menghitung nilai akhirmu.</p>
+                    </div>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 shrink-0">
+                        <div class="bg-white/10 border border-white/15 rounded-xl p-3 text-center">
+                            <div class="text-[11px] text-indigo-200">Skor PG (Maks 60)</div>
+                            <div id="calc-pg-score" class="text-lg font-extrabold font-mono text-white mt-0.5">0.0</div>
+                        </div>
+                        <div class="bg-white/10 border border-white/15 rounded-xl p-3 text-center">
+                            <div class="text-[11px] text-indigo-200">Skor Uraian (Maks 40)</div>
+                            <div id="calc-essay-score" class="text-lg font-extrabold font-mono text-amber-300 mt-0.5">0</div>
+                        </div>
+                        <div class="bg-white/10 border border-white/15 rounded-xl p-3 text-center">
+                            <div class="text-[11px] text-indigo-200">Total Nilai Akhir</div>
+                            <div id="calc-total-score" class="text-xl font-extrabold font-mono text-teal-300 mt-0.5">0.0</div>
+                        </div>
+                        <div id="calc-kktp-box" class="bg-rose-500/20 border border-rose-400/40 rounded-xl p-3 text-center flex flex-col justify-center">
+                            <div class="text-[10px] uppercase font-bold text-rose-200">Status KKTP (75)</div>
+                            <div id="calc-kktp-status" class="text-xs font-extrabold text-rose-300 mt-0.5">Belum Tuntas</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Daftar 10 Soal Uraian -->
+            <div id="uraian-questions-container" class="space-y-5">
+                <!-- Diisi oleh JavaScript -->
+            </div>
+        </section>
+
+        <!-- =================================================================== -->
+        <!-- TAB 4: KISI-KISI ASESMEN                                            -->
+        <!-- =================================================================== -->
+        <section id="section-kisikisi" class="hidden space-y-6 animate-pop">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 pb-4">
+                    <div>
+                        <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700">DOKUMEN PERENCANAAN EVALUASI</span>
+                        <h2 class="text-xl font-extrabold text-slate-900 mt-2">Kisi-Kisi Asesmen Sumatif Akhir Semester (SAS)</h2>
+                    </div>
+                    <div class="grid grid-cols-2 gap-x-6 gap-y-1 text-xs bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+                        <div class="text-slate-500">Satuan Pendidikan:</div><div class="font-bold text-slate-800">SMP AL-AKHYAR</div>
+                        <div class="text-slate-500">Mata Pelajaran:</div><div class="font-bold text-slate-800">Informatika (Fase D)</div>
+                        <div class="text-slate-500">Kelas / Semester:</div><div class="font-bold text-slate-800">VIII / 1 (Ganjil)</div>
+                        <div class="text-slate-500">Tahun Ajaran:</div><div class="font-bold text-slate-800">2026/2027</div>
+                        <div class="text-slate-500">Penyusun:</div><div class="font-bold text-indigo-700">Ahmad Hudzaifah, S.Kom</div>
+                    </div>
+                </div>
+
+                <!-- Tabel Kisi-Kisi -->
+                <div class="mt-5 overflow-x-auto rounded-xl border border-slate-200">
+                    <table class="w-full text-xs text-left border-collapse">
+                        <thead class="bg-indigo-900 text-white">
+                            <tr>
+                                <th class="p-3 border-r border-indigo-800">Bab / Materi Pokok</th>
+                                <th class="p-3 border-r border-indigo-800">Kode TP</th>
+                                <th class="p-3 border-r border-indigo-800">Indikator Pencapaian Kompetensi</th>
+                                <th class="p-3 border-r border-indigo-800 text-center">Level Kognitif</th>
+                                <th class="p-3 border-r border-indigo-800 text-center">No. Soal PG</th>
+                                <th class="p-3 text-center">No. Soal Uraian</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200">
+                            <!-- BAB I -->
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-bold text-indigo-900 bg-indigo-50/40" rowspan="3">Bab I: Informatika dan Keterampilannya</td>
+                                <td class="p-3 font-mono font-bold text-slate-700">TP 8.1.1</td>
+                                <td class="p-3 text-slate-700">Menjelaskan ruang lingkup Informatika, keterkaitan antar elemen (BK sebagai landasan), serta refleksi materi kelas VII.</td>
+                                <td class="p-3 text-center"><span class="px-2 py-0.5 rounded bg-blue-100 text-blue-800 font-bold">L1–L2 (C1–C3)</span></td>
+                                <td class="p-3 text-center font-mono font-bold">1, 2, 3</td>
+                                <td class="p-3 text-center font-mono font-bold">1</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-mono font-bold text-slate-700">TP 8.1.2</td>
+                                <td class="p-3 text-slate-700">Menerapkan kolaborasi kerja kelompok (Profil Pelajar Pancasila), urutan perencanaan proyek, dan komunikasi visual (infografis).</td>
+                                <td class="p-3 text-center"><span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-bold">L2–L3 (C3–C4)</span></td>
+                                <td class="p-3 text-center font-mono font-bold">4, 5, 6, 7, 8</td>
+                                <td class="p-3 text-center font-mono font-bold">2</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-mono font-bold text-slate-700">TP 8.1.3</td>
+                                <td class="p-3 text-slate-700">Membedakan karakteristik Revolusi Industri 4.0 dan konsep masyarakat cerdas Society 5.0.</td>
+                                <td class="p-3 text-center"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold">L2 (C2–C4)</span></td>
+                                <td class="p-3 text-center font-mono font-bold">9, 10</td>
+                                <td class="p-3 text-center font-mono font-bold">—</td>
+                            </tr>
+
+                            <!-- BAB II -->
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-bold text-teal-900 bg-teal-50/40" rowspan="3">Bab II: Berpikir Komputasional (BK)</td>
+                                <td class="p-3 font-mono font-bold text-slate-700">TP 8.2.1</td>
+                                <td class="p-3 text-slate-700">Menentukan nilai keluaran (output) dari suatu fungsi matematika sederhana dan memodelkan proses input-proses-output.</td>
+                                <td class="p-3 text-center"><span class="px-2 py-0.5 rounded bg-blue-100 text-blue-800 font-bold">L2 (C3)</span></td>
+                                <td class="p-3 text-center font-mono font-bold">11, 12, 13</td>
+                                <td class="p-3 text-center font-mono font-bold">3</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-mono font-bold text-slate-700">TP 8.2.2</td>
+                                <td class="p-3 text-slate-700">Melakukan konversi sistem bilangan Desimal ke Biner dan Oktal maupun sebaliknya dengan metode pembagian berulang.</td>
+                                <td class="p-3 text-center"><span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-bold">L2–L3 (C3)</span></td>
+                                <td class="p-3 text-center font-mono font-bold">14, 15, 16</td>
+                                <td class="p-3 text-center font-mono font-bold">4</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-mono font-bold text-slate-700">TP 8.2.3</td>
+                                <td class="p-3 text-slate-700">Menerapkan struktur data Stack (LIFO), Queue (FIFO), dan operasi Himpunan (irisan/gabungan) dalam pemecahan masalah.</td>
+                                <td class="p-3 text-center"><span class="px-2 py-0.5 rounded bg-rose-100 text-rose-800 font-bold">L3 (C4)</span></td>
+                                <td class="p-3 text-center font-mono font-bold">17, 18, 19, 20</td>
+                                <td class="p-3 text-center font-mono font-bold">5</td>
+                            </tr>
+
+                            <!-- BAB III -->
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-bold text-amber-900 bg-amber-50/40" rowspan="3">Bab III: Teknologi Informasi dan Komunikasi (TIK)</td>
+                                <td class="p-3 font-mono font-bold text-slate-700">TP 8.3.1</td>
+                                <td class="p-3 text-slate-700">Mengidentifikasi karakteristik objek pada aplikasi pengolah kata, pengolah angka (sel/baris/kolom), dan presentasi.</td>
+                                <td class="p-3 text-center"><span class="px-2 py-0.5 rounded bg-blue-100 text-blue-800 font-bold">L1–L2 (C2)</span></td>
+                                <td class="p-3 text-center font-mono font-bold">21, 22, 23</td>
+                                <td class="p-3 text-center font-mono font-bold">—</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-mono font-bold text-slate-700">TP 8.3.2</td>
+                                <td class="p-3 text-slate-700">Menganalisis integrasi objek antar aplikasi perkantoran (Paste Link grafik/tabel) serta merancang fitur Mail Merge.</td>
+                                <td class="p-3 text-center"><span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-bold">L2–L3 (C3–C4)</span></td>
+                                <td class="p-3 text-center font-mono font-bold">24, 25, 26, 27</td>
+                                <td class="p-3 text-center font-mono font-bold">6, 7</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-mono font-bold text-slate-700">TP 8.3.3</td>
+                                <td class="p-3 text-slate-700">Mengevaluasi pemanfaatan dan keunggulan Laboratorium Maya (Virtual Lab) dalam simulasi pembelajaran.</td>
+                                <td class="p-3 text-center"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold">L2 (C3)</span></td>
+                                <td class="p-3 text-center font-mono font-bold">28, 29, 30</td>
+                                <td class="p-3 text-center font-mono font-bold">—</td>
+                            </tr>
+
+                            <!-- BAB IV -->
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-bold text-rose-900 bg-rose-50/40" rowspan="3">Bab IV: Sistem Komputer (SK) & JKI Dasar</td>
+                                <td class="p-3 font-mono font-bold text-slate-700">TP 8.4.1</td>
+                                <td class="p-3 text-slate-700">Menjelaskan fungsi komponen internal CPU (ALU, CU, Register, Cache), memori volatile vs non-volatile, dan siklus Fetch-Decode-Execute.</td>
+                                <td class="p-3 text-center"><span class="px-2 py-0.5 rounded bg-blue-100 text-blue-800 font-bold">L1–L2 (C2–C3)</span></td>
+                                <td class="p-3 text-center font-mono font-bold">31, 32, 33, 34</td>
+                                <td class="p-3 text-center font-mono font-bold">8</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-mono font-bold text-slate-700">TP 8.4.2</td>
+                                <td class="p-3 text-slate-700">Menghitung pengalamatan memori menggunakan sistem bilangan Heksadesimal (basis 16) serta operasi gerbang logika dasar.</td>
+                                <td class="p-3 text-center"><span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-bold">L2–L3 (C3)</span></td>
+                                <td class="p-3 text-center font-mono font-bold">35, 36, 37</td>
+                                <td class="p-3 text-center font-mono font-bold">9</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-mono font-bold text-slate-700">TP 8.4.3</td>
+                                <td class="p-3 text-slate-700">Menerapkan prinsip jaringan komputer lokal (LAN) dan keamanan berinternet pada jaringan Wi-Fi publik (HTTPS, 2FA).</td>
+                                <td class="p-3 text-center"><span class="px-2 py-0.5 rounded bg-rose-100 text-rose-800 font-bold">L3 (C4)</span></td>
+                                <td class="p-3 text-center font-mono font-bold">38, 39, 40</td>
+                                <td class="p-3 text-center font-mono font-bold">10</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="bg-slate-900 text-slate-400 text-xs py-5 mt-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-2">
+            <div>Media Belajar Interaktif Informatika Kelas VIII — <strong>SMP AL-AKHYAR</strong></div>
+            <div>Disusun berdasarkan Bank Soal & Kisi-Kisi oleh <strong>Ahmad Hudzaifah, S.Kom</strong></div>
+        </div>
+    </footer>
+
+    <!-- ================= JAVASCRIPT LOGIC & DATA BANK SOAL ================= -->
+    <script>
+        // -------------------------------------------------------------------------
+        // 1. DATA BANK SOAL PILIHAN GANDA (40 SOAL LENGKAP BAB I - BAB IV)
+        // -------------------------------------------------------------------------
+        const pgQuestions = [
+            // --- BAB I (1 - 10) ---
+            {
+                no: 1, bab: 1,
+                q: "Dalam struktur kurikulum Informatika SMP, elemen manakah yang menjadi landasan (fondasi) utama bagi seluruh elemen pengetahuan Informatika lainnya seperti TIK, Sistem Komputer, dan Analisis Data?",
+                options: { A: "Teknologi Informasi dan Komunikasi (TIK)", B: "Berpikir Komputasional (BK)", C: "Dampak Sosial Informatika (DSI)", D: "Praktik Lintas Bidang (PLB)" },
+                ans: "B",
+                exp: "Berpikir Komputasional (BK) merupakan fondasi utama dalam Informatika karena melatih cara berpikir logis, algoritmik, dan sistematis yang mendasari seluruh elemen lainnya."
+            },
+            {
+                no: 2, bab: 1,
+                q: "Saat melakukan refleksi pembelajaran Informatika dari Kelas VII ke Kelas VIII, siswa menyadari bahwa keterampilan mengelola file dan folder secara terstruktur sangat membantu ketika mengerjakan proyek di Kelas VIII. Hal ini menunjukkan bahwa materi Informatika bersifat...",
+                options: { A: "Terpisah antar jenjang kelas", B: "Berkesinambungan dan saling membangun (progresif)", C: "Hanya berfokus pada hafalan perangkat keras", D: "Tidak memerlukan praktik langsung" },
+                ans: "B",
+                exp: "Kurikulum Informatika dirancang secara progresif dan berkesinambungan sehingga kompetensi dasar di kelas VII menjadi bekal untuk tantangan lebih kompleks di kelas VIII."
+            },
+            {
+                no: 3, bab: 1,
+                q: "Elemen dalam Informatika yang mempelajari bagaimana data dikumpulkan, diolah, divisualisasikan, dan diinterpretasikan untuk mengambil keputusan disebut...",
+                options: { A: "Sistem Komputer (SK)", B: "Jaringan Komputer dan Internet (JKI)", C: "Analisis Data (AD)", D: "Algoritma dan Pemrograman (AP)" },
+                ans: "C",
+                exp: "Analisis Data (AD) berfokus pada proses pengumpulan, pembersihan, pengolahan, dan visualisasi data agar bermakna."
+            },
+            {
+                no: 4, bab: 1,
+                q: "Sebuah kelompok beranggotakan 4 siswa dengan kemampuan berbeda (ada yang mahir desain, ada yang teliti menulis, dan ada yang pandai presentasi) bekerja sama menyelesaikan proyek majalah dinding digital. Sikap ini mencerminkan dimensi Profil Pelajar Pancasila, yaitu...",
+                options: { A: "Mandiri", B: "Bergotong Royong", C: "Berkebinekaan Global", D: "Kreatif" },
+                ans: "B",
+                exp: "Kolaborasi positif dengan saling melengkapi peran dalam tim untuk mencapai tujuan bersama merupakan inti dari dimensi Bergotong Royong."
+            },
+            {
+                no: 5, bab: 1,
+                q: "Perhatikan tahapan perencanaan kerja kelompok berikut:\n(1) Menyusun jadwal kerja\n(2) Mengidentifikasi masalah dan tujuan proyek\n(3) Melaksanakan proyek dan evaluasi\n(4) Membagi peran dan tugas anggota\nUrutan langkah perencanaan kerja kelompok yang paling tepat adalah...",
+                options: { A: "(2) - (4) - (1) - (3)", B: "(1) - (2) - (3) - (4)", C: "(4) - (2) - (1) - (3)", D: "(2) - (1) - (4) - (3)" },
+                ans: "A",
+                exp: "Langkah sistematis dimulai dari memahami masalah/tujuan (2), membagi tugas tim (4), menyusun jadwal pengerjaan (1), lalu eksekusi dan evaluasi (3)."
+            },
+            {
+                no: 6, bab: 1,
+                q: "Untuk memantau progres pengerjaan tugas kelompok agar jelas mana tugas yang belum dikerjakan, sedang dikerjakan, dan sudah selesai, metode manajemen visual yang paling praktis digunakan adalah...",
+                options: { A: "Kamus Istilah", B: "Papan Kanban (To Do - Doing - Done)", C: "Daftar Pustaka", D: "Surat Resmi" },
+                ans: "B",
+                exp: "Papan Kanban memvisualisasikan alur kerja dalam kolom status (To Do, Doing, Done) sehingga memudahkan koordinasi tim."
+            },
+            {
+                no: 7, bab: 1,
+                q: "Ketika menyajikan ringkasan hasil penelitian kelompok di depan kelas agar mudah dipahami oleh audiens dalam waktu singkat, bentuk media komunikasi visual yang paling efektif adalah...",
+                options: { A: "Laporan teks 20 halaman tanpa gambar", B: "Infografis yang memadukan teks singkat, ikon, dan grafik", C: "File kode sumber mentah", D: "Tabel angka mentah ribuan baris" },
+                ans: "B",
+                exp: "Infografis dirancang untuk menyampaikan informasi kompleks secara ringkas, visual, dan cepat dipahami oleh pembaca."
+            },
+            {
+                no: 8, bab: 1,
+                q: "Dalam diskusi kelompok, Raka tidak langsung menerima informasi dari internet begitu saja, melainkan memeriksa sumber data dan membandingkannya dengan fakta lain. Sikap Raka menunjukkan elemen Profil Pelajar Pancasila...",
+                options: { A: "Bernalar Kritis", B: "Bergotong Royong", C: "Mandiri", D: "Beriman dan Bertakwa" },
+                ans: "A",
+                exp: "Memproses informasi secara objektif, memverifikasi sumber, dan menganalisis kebenaran data merupakan ciri utama Bernalar Kritis."
+            },
+            {
+                no: 9, bab: 1,
+                q: "Perbedaan mendasar antara konsep Revolusi Industri 4.0 dan Society 5.0 terletak pada fokus utamanya, yaitu...",
+                options: { A: "Industri 4.0 menolak penggunaan internet, sedangkan Society 5.0 menggunakannya", B: "Industri 4.0 berfokus pada otomatisasi teknologi/mesin, sedangkan Society 5.0 menempatkan manusia sebagai pusat pemanfaatan teknologi untuk kesejahteraan sosial", C: "Society 5.0 hanya berlaku di bidang pertanian tradisional", D: "Industri 4.0 lebih baru daripada Society 5.0" },
+                ans: "B",
+                exp: "Society 5.0 adalah konsep masyarakat super-cerdas yang berpusat pada manusia (human-centered) untuk menyeimbangkan kemajuan ekonomi dengan penyelesaian masalah sosial."
+            },
+            {
+                no: 10, bab: 1,
+                q: "Pemanfaatan sensor IoT, Big Data, dan kecerdasan buatan (AI) untuk membantu memantau kesehatan lansia di rumah secara otomatis merupakan contoh penerapan dari era...",
+                options: { A: "Revolusi Industri 1.0", B: "Revolusi Industri 2.0", C: "Society 5.0", D: "Era Pra-Digital" },
+                ans: "C",
+                exp: "Integrasi ruang maya dan ruang fisik untuk membantu kebutuhan sosial dan kesehatan manusia adalah contoh nyata Society 5.0."
+            },
+
+            // --- BAB II (11 - 20) ---
+            {
+                no: 11, bab: 2,
+                q: "Diketahui sebuah mesin fungsi komputer memiliki aturan f(x) = 3x + 2. Jika bilangan yang dimasukkan sebagai input adalah x = 5, maka nilai output yang dihasilkan adalah...",
+                options: { A: "15", B: "17", C: "10", D: "21" },
+                ans: "B",
+                exp: "Substitusi x = 5 ke dalam f(x) = 3x + 2 menghasilkan f(5) = 3(5) + 2 = 15 + 2 = 17."
+            },
+            {
+                no: 12, bab: 2,
+                q: "Sebuah fungsi kuadrat sederhana didefinisikan sebagai g(x) = 2x² - 3. Apabila input yang diberikan adalah x = 3, berapakah nilai keluarannya?",
+                options: { A: "15", B: "18", C: "33", D: "9" },
+                ans: "A",
+                exp: "g(3) = 2(3²) - 3 = 2(9) - 3 = 18 - 3 = 15."
+            },
+            {
+                no: 13, bab: 2,
+                q: "Dalam konsep fungsi pada Berpikir Komputasional, setiap satu nilai input (domain) yang valid akan diproses dan menghasilkan...",
+                options: { A: "Banyak output yang berbeda-beda secara acak", B: "Tepat satu nilai output (range) yang pasti", C: "Tidak ada output sama sekali", D: "Error pada sistem" },
+                ans: "B",
+                exp: "Sifat dasar fungsi adalah memetakan setiap anggota himpunan input ke tepat satu anggota himpunan output."
+            },
+            {
+                no: 14, bab: 2,
+                q: "Komputer hanya mengenali sinyal listrik hidup (1) dan mati (0) yang disebut sistem bilangan biner. Bentuk biner dari bilangan desimal 13₁₀ adalah...",
+                options: { A: "1011₂", B: "1101₂", C: "1110₂", D: "1001₂" },
+                ans: "B",
+                exp: "13 : 2 = 6 sisa 1; 6 : 2 = 3 sisa 0; 3 : 2 = 1 sisa 1; 1 : 2 = 0 sisa 1. Dibaca dari bawah ke atas: 1101₂."
+            },
+            {
+                no: 15, bab: 2,
+                q: "Hasil konversi bilangan desimal 25₁₀ ke dalam sistem bilangan Oktal (basis 8) adalah...",
+                options: { A: "31₈", B: "13₈", C: "25₈", D: "30₈" },
+                ans: "A",
+                exp: "25 : 8 = 3 sisa 1; 3 : 8 = 0 sisa 3. Dibaca dari bawah ke atas menjadi 31₈ (3×8 + 1 = 25)."
+            },
+            {
+                no: 16, bab: 2,
+                q: "Bilangan biner 10110₂ jika dikonversi menjadi bilangan desimal bernilai...",
+                options: { A: "20", B: "22", C: "24", D: "26" },
+                ans: "B",
+                exp: "(1×16) + (0×8) + (1×4) + (1×2) + (0×1) = 16 + 0 + 4 + 2 + 0 = 22."
+            },
+            {
+                no: 17, bab: 2,
+                q: "Fitur 'Undo' (Ctrl+Z) pada aplikasi pengolah kata yang membatalkan tindakan terakhir yang baru saja dilakukan pengguna menerapkan prinsip struktur data...",
+                options: { A: "Queue (FIFO)", B: "Stack (LIFO)", C: "Array Acak", D: "Tree" },
+                ans: "B",
+                exp: "Stack bekerja dengan prinsip LIFO (Last In, First Out): aksi yang paling terakhir masuk akan menjadi yang pertama kali dikeluarkan/dibatalkan."
+            },
+            {
+                no: 18, bab: 2,
+                q: "Sebuah tumpukan (Stack) mula-mula kosong. Dilakukan operasi berturut-turut: Push(A), Push(B), Pop(), Push(C), Push(D), Pop(). Elemen yang berada di posisi paling atas (Top) sekarang adalah...",
+                options: { A: "A", B: "B", C: "C", D: "D" },
+                ans: "C",
+                exp: "Urutan: [A] -> [A,B] -> Pop B menjadi [A] -> [A,C] -> [A,C,D] -> Pop D menjadi [A,C]. Elemen teratas adalah C."
+            },
+            {
+                no: 19, bab: 2,
+                q: "Pada sistem antrean dokumen cetak (Print Spooler), dokumen yang dikirim pertama kali ke printer akan dicetak terlebih dahulu. Konsep ini disebut...",
+                options: { A: "LIFO (Last In, First Out)", B: "FIFO (First In, First Out)", C: "FILO (First In, Last Out)", D: "Random Access" },
+                ans: "B",
+                exp: "Queue (antrean) menggunakan prinsip FIFO (First In, First Out), di mana elemen pertama yang masuk adalah yang pertama dilayani."
+            },
+            {
+                no: 20, bab: 2,
+                q: "Diketahui himpunan siswa gemar Coding A = {Budi, Citra, Dani, Eka} dan himpunan siswa gemar Desain B = {Citra, Eka, Farhan}. Irisan dari kedua himpunan tersebut (A ∩ B) adalah...",
+                options: { A: "{Budi, Dani}", B: "{Citra, Eka}", C: "{Budi, Citra, Dani, Eka, Farhan}", D: "{Farhan}" },
+                ans: "B",
+                exp: "Irisan (A ∩ B) adalah anggota yang termasuk ke dalam himpunan A sekaligus himpunan B, yaitu Citra dan Eka."
+            },
+
+            // --- BAB III (21 - 30) ---
+            {
+                no: 21, bab: 3,
+                q: "Setiap aplikasi perkantoran memiliki objek utama yang dikelola. Objek utama pada aplikasi pengolah angka (Spreadsheet seperti Microsoft Excel) disusun dalam bentuk...",
+                options: { A: "Paragraf dan halaman dokumen", B: "Slide dan transisi visual", C: "Sel, baris, dan kolom dalam lembar kerja (worksheet)", D: "Layer bitmap dan vektor" },
+                ans: "C",
+                exp: "Aplikasi pengolah angka mengelola data tabular yang tersusun atas perpotongan baris (row) dan kolom (column) yang membentuk sel (cell)."
+            },
+            {
+                no: 22, bab: 3,
+                q: "Jika kamu diminta membuat laporan narasi kegiatan OSIS yang rapi dilengkapi daftar isi otomatis, header, footer, dan penomoran halaman, aplikasi yang paling tepat adalah...",
+                options: { A: "Aplikasi Pengolah Kata (Word Processor)", B: "Aplikasi Pengolah Angka (Spreadsheet)", C: "Aplikasi Pengolah Grafis", D: "Aplikasi Pemutar Media" },
+                ans: "A",
+                exp: "Aplikasi pengolah kata memang dirancang khusus untuk penyusunan dokumen teks panjang, pemformatan paragraf, dan daftar isi otomatis."
+            },
+            {
+                no: 23, bab: 3,
+                q: "Perpotongan antara kolom C dan baris ke-5 pada aplikasi lembar kerja (Spreadsheet) disebut alamat sel...",
+                options: { A: "5C", B: "C5", C: "C-5", D: "Row5ColC" },
+                ans: "B",
+                exp: "Penulisan alamat sel standar diawali huruf kolom diikuti nomor baris, yaitu C5."
+            },
+            {
+                no: 24, bab: 3,
+                q: "Nadia menyalin grafik penjualan bazar sekolah dari Excel ke laporan di Word. Ia ingin grafik di Word otomatis berubah jika angka di Excel diperbaiki tanpa harus menyalin ulang. Opsi tempel yang harus dipilih Nadia adalah...",
+                options: { A: "Paste as Picture (Gambar statis)", B: "Keep Text Only", C: "Paste Link (Link Data)", D: "Screenshot" },
+                ans: "C",
+                exp: "Paste Link menjaga tautan dinamis antara file sumber (Excel) dan file tujuan (Word) sehingga pembaruan data tersinkronisasi otomatis."
+            },
+            {
+                no: 25, bab: 3,
+                q: "Panitia ujian SMP Al-Akhyar ingin mencetak 250 kartu peserta ujian dengan format desain yang sama, namun nama siswa, NISN, dan ruang ujian berbeda-beda. Fitur aplikasi perkantoran yang paling efisien untuk tugas ini adalah...",
+                options: { A: "Track Changes", B: "Mail Merge", C: "Spell Check", D: "Freeze Panes" },
+                ans: "B",
+                exp: "Mail Merge menggabungkan satu dokumen utama (template) dengan sumber data (daftar siswa) untuk menghasilkan dokumen massal secara otomatis."
+            },
+            {
+                no: 26, bab: 3,
+                q: "Dalam pembuatan Mail Merge, file tabel berisi daftar nama siswa, kelas, dan nomor peserta yang dibuat di Excel berperan sebagai...",
+                options: { A: "Main Document", B: "Data Source", C: "Merge Field", D: "Header Footer" },
+                ans: "B",
+                exp: "Data Source adalah sumber basis data (bisa berupa Excel, CSV, atau Access) yang menyimpan rekaman data setiap penerima."
+            },
+            {
+                no: 27, bab: 3,
+                q: "Pada dokumen utama Mail Merge tertulis kalimat: 'Kepada Yth. <<Nama_Siswa>> di Kelas <<Kelas>>'. Tanda <<Nama_Siswa>> disebut...",
+                options: { A: "Hyperlink", B: "Merge Field", C: "Watermark", D: "Footnote" },
+                ans: "B",
+                exp: "Merge Field adalah penanda (placeholder) kolom data yang akan digantikan secara otomatis oleh isi data dari Data Source saat digabungkan."
+            },
+            {
+                no: 28, bab: 3,
+                q: "Laboratorium Maya (Virtual Lab) seperti PhET Simulations sangat bermanfaat dalam pembelajaran IPA dan Informatika karena...",
+                options: { A: "Menggantikan sepenuhnya peran guru di kelas", B: "Memungkinkan siswa melakukan simulasi percobaan dengan aman, bebas risiko kerusakan alat, dan dapat diulang kapan saja", C: "Membutuhkan bahan kimia asli yang mahal", D: "Hanya bisa digunakan oleh ilmuwan profesional" },
+                ans: "B",
+                exp: "Virtual Lab memberikan pengalaman eksperimen interaktif secara simulasi digital yang aman, hemat biaya, dan fleksibel."
+            },
+            {
+                no: 29, bab: 3,
+                q: "Ketika mengubah parameter tegangan baterai pada simulasi rangkaian listrik di Laboratorium Maya, nyala lampu simulasi langsung berubah terang atau redup. Hal ini menunjukkan bahwa Virtual Lab bekerja berdasarkan...",
+                options: { A: "Video rekaman yang tidak bisa diubah", B: "Model matematis dan algoritma simulasi interaktif", C: "Gambar statis biasa", D: "Tebakan acak komputer" },
+                ans: "B",
+                exp: "Virtual Lab menggunakan pemodelan matematis dan logika pemrograman sehingga merespons input variabel pengguna secara akurat."
+            },
+            {
+                no: 30, bab: 3,
+                q: "Manakah di bawah ini yang merupakan contoh keterbatasan dari Laboratorium Maya dibandingkan praktikum laboratorium fisik secara langsung?",
+                options: { A: "Tidak bisa diakses menggunakan komputer", B: "Tidak melatih keterampilan motorik memegang atau merakit alat fisik secara nyata", C: "Terlalu berbahaya bagi keselamatan siswa", D: "Biaya operasional sekali percobaan sangat mahal" },
+                ans: "B",
+                exp: "Meskipun sangat baik untuk pemahaman konsep, simulasi virtual tidak memberikan pengalaman psikomotorik memegang peralatan fisik secara langsung."
+            },
+
+            // --- BAB IV (31 - 40) ---
+            {
+                no: 31, bab: 4,
+                q: "Bagian di dalam CPU (Central Processing Unit) yang bertugas melakukan perhitungan aritmetika (penjumlahan, pengurangan) serta operasi perbandingan logika (AND, OR, NOT) adalah...",
+                options: { A: "Control Unit (CU)", B: "Arithmetic Logic Unit (ALU)", C: "Hard Disk Drive (HDD)", D: "Power Supply" },
+                ans: "B",
+                exp: "ALU (Arithmetic Logic Unit) adalah unit pemroses di dalam CPU yang mengeksekusi seluruh operasi matematika dan logika."
+            },
+            {
+                no: 32, bab: 4,
+                q: "Saat kamu mengetik tugas di komputer lalu tiba-tiba listrik padam sebelum file disimpan (Save), seluruh ketikan yang belum disimpan akan hilang. Hal ini terjadi karena dokumen tersebut masih berada di memori...",
+                options: { A: "ROM (Read Only Memory)", B: "RAM (Random Access Memory) yang bersifat volatile", C: "SSD (Solid State Drive) yang bersifat non-volatile", D: "Flashdisk" },
+                ans: "B",
+                exp: "RAM bersifat volatile, artinya membutuhkan aliran listrik untuk mempertahankan data; saat listrik mati, isinya terhapus."
+            },
+            {
+                no: 33, bab: 4,
+                q: "Urutan siklus kerja dasar CPU dalam memproses setiap instruksi program adalah...",
+                options: { A: "Execute → Decode → Fetch", B: "Fetch → Decode → Execute", C: "Decode → Fetch → Execute", D: "Store → Execute → Fetch" },
+                ans: "B",
+                exp: "Siklus instruksi CPU selalu berurutan: Fetch (mengambil instruksi dari memori), Decode (menerjemahkan kode instruksi), dan Execute (menjalankan instruksi)."
+            },
+            {
+                no: 34, bab: 4,
+                q: "Memori berukuran sangat kecil namun memiliki kecepatan akses paling tinggi yang terletak langsung di dalam inti prosesor (CPU) untuk menyimpan data sementara saat dieksekusi adalah...",
+                options: { A: "Register", B: "Optical Disc (DVD)", C: "Hard Disk", D: "Kartu SD" },
+                ans: "A",
+                exp: "Register berada tepat di dalam inti CPU dan merupakan tingkatan memori tercepat dalam hierarki memori komputer."
+            },
+            {
+                no: 35, bab: 4,
+                q: "Sistem bilangan Heksadesimal (basis 16) sering digunakan untuk menuliskan alamat memori dan MAC Address. Huruf 'C' pada sistem bilangan Heksadesimal setara dengan nilai desimal...",
+                options: { A: "10", B: "11", C: "12", D: "13" },
+                ans: "C",
+                exp: "Dalam heksadesimal: A=10, B=11, C=12, D=13, E=14, F=15."
+            },
+            {
+                no: 36, bab: 4,
+                q: "Sebuah alamat memori komputer dituliskan dalam format heksadesimal 1A₁₆. Nilai desimal dari alamat memori tersebut adalah...",
+                options: { A: "11", B: "26", C: "16", D: "20" },
+                ans: "B",
+                exp: "1A₁₆ = (1 × 16¹) + (10 × 16⁰) = 16 + 10 = 26₁₀."
+            },
+            {
+                no: 37, bab: 4,
+                q: "Sebuah gerbang logika AND memiliki dua input A dan B. Output gerbang AND akan bernilai 1 (lampu menyala) hanya apabila...",
+                options: { A: "Salah satu input bernilai 1", B: "Kedua input A dan B bernilai 1", C: "Kedua input A dan B bernilai 0", D: "Input A = 0 dan Input B = 1" },
+                ans: "B",
+                exp: "Gerbang AND menghasilkan output 1 (True) hanya jika SEMUA inputnya bernilai 1 (True)."
+            },
+            {
+                no: 38, bab: 4,
+                q: "Jaringan komputer yang menghubungkan 30 unit komputer di dalam satu ruang Laboratorium Komputer SMP Al-Akhyar menggunakan perangkat Switch dan kabel UTP termasuk jenis jaringan...",
+                options: { A: "WAN (Wide Area Network)", B: "MAN (Metropolitan Area Network)", C: "LAN (Local Area Network)", D: "PAN (Personal Area Network)" },
+                ans: "C",
+                exp: "LAN (Local Area Network) mencakup area geografis terbatas seperti satu ruangan, gedung, atau lingkungan sekolah."
+            },
+            {
+                no: 39, bab: 4,
+                q: "Saat menggunakan jaringan Wi-Fi gratis di tempat umum (kafe atau bandara), tindakan keamanan digital yang paling bijak dilakukan adalah...",
+                options: { A: "Melakukan transaksi mobile banking dan membuka kata sandi penting", B: "Memastikan situs web yang diakses menggunakan protokol HTTPS dan mengaktifkan 2FA", C: "Mematikan firewall perangkat agar koneksi lebih cepat", D: "Membagikan kode OTP kepada admin Wi-Fi" },
+                ans: "B",
+                exp: "Protokol HTTPS mengenkripsi lalu lintas data antara peramban dan server, sementara 2FA (Two-Factor Authentication) melindungi akun meski kata sandi bocor."
+            },
+            {
+                no: 40, bab: 4,
+                q: "Fungsi utama autentikasi dua faktor (Two-Factor Authentication / 2FA) saat masuk ke akun belajar atau email siswa adalah...",
+                options: { A: "Memperbesar kapasitas penyimpanan Google Drive", B: "Memberikan lapisan keamanan tambahan selain kata sandi (misalnya kode OTP atau konfirmasi ponsel)", C: "Menghapus riwayat penjelajahan otomatis", D: "Mempercepat koneksi Wi-Fi" },
+                ans: "B",
+                exp: "2FA mewajibkan dua bukti identitas berbeda sehingga akun tetap aman meskipun orang lain mengetahui kata sandimu."
+            }
+        ];
+
+        // -------------------------------------------------------------------------
+        // 2. DATA BANK SOAL URAIAN / ESSAY (10 SOAL + KUNCI & RUBRIK SKOR 0-4)
+        // -------------------------------------------------------------------------
+        const essayQuestions = [
+            {
+                no: 1, bab: "Bab I", tp: "TP 8.1.1",
+                q: "Jelaskan mengapa Berpikir Komputasional (BK) disebut sebagai fondasi utama dalam mempelajari Informatika, dan berikan satu contoh keterkaitannya dengan elemen Analisis Data (AD)!",
+                key: "Berpikir Komputasional (BK) melatih pola pikir logis, dekomposisi masalah, pengenalan pola, abstraksi, dan penyusunan algoritma yang menjadi dasar pemecahan masalah di seluruh bidang Informatika. Keterkaitan dengan Analisis Data (AD): Sebelum mengolah data survei siswa di spreadsheet, kita menggunakan abstraksi untuk memilih kolom data yang relevan saja dan menyusun algoritma/rumus perhitungan rata-rata.",
+                rubric: "Skor 4: Menjelaskan alasan BK sebagai fondasi dengan tepat dan memberi contoh keterkaitan yang konkret dengan AD. | Skor 3: Penjelasan tepat namun contoh kurang spesifik. | Skor 2: Hanya menjawab salah satu bagian dengan benar. | Skor 1: Jawaban kurang relevan. | Skor 0: Tidak menjawab."
+            },
+            {
+                no: 2, bab: "Bab I", tp: "TP 8.1.2",
+                q: "Kelompokmu ditugaskan membuat kampanye digital tentang 'Etika Bermedia Sosial' dalam bentuk infografis. Tuliskan 4 langkah urutan perencanaan proyek kelompok secara sistematis agar tugas selesai tepat waktu!",
+                key: "1) Identifikasi masalah & tujuan kampanye (menentukan target audiens dan pesan utama etika bermedia sosial).\n2) Pembagian peran & tugas anggota (penulis konten, pencari data, desainer infografis, presenter).\n3) Penyusunan jadwal kerja / timeline (target pengumpulan materi, desain, dan revisi).\n4) Pelaksanaan pembuatan karya, evaluasi bersama (koreksi konten/desain), dan presentasi hasil.",
+                rubric: "Skor 4: Menyebutkan 4 tahapan perencanaan proyek secara runtut dan relevan dengan konteks tugas. | Skor 3: Menyebutkan 3-4 tahapan namun urutan kurang runtut. | Skor 2: Hanya menyebutkan 2 tahapan. | Skor 1: Menyebutkan 1 tahapan. | Skor 0: Tidak menjawab."
+            },
+            {
+                no: 3, bab: "Bab II", tp: "TP 8.2.1",
+                q: "Sebuah mesin fungsi komputer memiliki rumus h(x) = 4x - 5. Hitunglah nilai keluaran (output) apabila nilai masukannya (input) adalah x = 3 dan x = 7! Tuliskan langkah perhitungannya!",
+                key: "• Untuk x = 3:\n  h(3) = 4(3) - 5 = 12 - 5 = 7\n• Untuk x = 7:\n  h(7) = 4(7) - 5 = 28 - 5 = 23",
+                rubric: "Skor 4: Kedua perhitungan benar (7 dan 23) beserta langkah substitusi yang jelas. | Skor 3: Kedua hasil akhir benar namun tanpa langkah perhitungan. | Skor 2: Hanya satu perhitungan yang benar beserta langkahnya. | Skor 1: Rumus ditulis namun hasil salah. | Skor 0: Tidak menjawab."
+            },
+            {
+                no: 4, bab: "Bab II", tp: "TP 8.2.2",
+                q: "Konversikan bilangan desimal 29₁₀ ke dalam sistem bilangan Biner (basis 2) dan Oktal (basis 8)! Sertakan cara pembagian berulangnya!",
+                key: "• Konversi ke Biner (basis 2):\n  29 : 2 = 14 sisa 1\n  14 : 2 = 7 sisa 0\n  7 : 2 = 3 sisa 1\n  3 : 2 = 1 sisa 1\n  1 : 2 = 0 sisa 1\n  Dibaca dari bawah ke atas = 11101₂\n• Konversi ke Oktal (basis 8):\n  29 : 8 = 3 sisa 5\n  3 : 8 = 0 sisa 3\n  Dibaca dari bawah ke atas = 35₈",
+                rubric: "Skor 4: Konversi Biner (11101₂) dan Oktal (35₈) benar beserta cara pembagian berulang lengkap. | Skor 3: Kedua jawaban benar namun cara pembagian kurang lengkap. | Skor 2: Hanya satu konversi yang benar dengan caranya. | Skor 1: Mencoba membagi namun hasil akhir salah semua. | Skor 0: Tidak menjawab."
+            },
+            {
+                no: 5, bab: "Bab II", tp: "TP 8.2.3",
+                q: "Jelaskan perbedaan prinsip kerja struktur data Stack dan Queue, serta berikan masing-masing 1 contoh penerapannya dalam kehidupan sehari-hari atau aplikasi komputer!",
+                key: "• Stack menggunakan prinsip LIFO (Last In, First Out), artinya data yang terakhir masuk akan pertama kali keluar. Contoh: Fitur Undo (Ctrl+Z) pada editor teks atau tumpukan piring.\n• Queue menggunakan prinsip FIFO (First In, First Out), artinya data yang pertama masuk akan pertama kali keluar/dilayani. Contoh: Antrean cetak dokumen pada printer atau antrean loket tiket.",
+                rubric: "Skor 4: Menjelaskan prinsip LIFO & FIFO dengan tepat serta memberi masing-masing 1 contoh yang benar. | Skor 3: Prinsip benar namun hanya memberi 1 contoh yang tepat. | Skor 2: Hanya menjelaskan Stack atau Queue saja dengan benar. | Skor 1: Penjelasan tertukar antara LIFO dan FIFO. | Skor 0: Tidak menjawab."
+            },
+            {
+                no: 6, bab: "Bab III", tp: "TP 8.3.2",
+                q: "Mengapa fitur 'Paste Link' sangat disarankan ketika menyisipkan tabel atau grafik dari aplikasi pengolah angka (Excel) ke dalam dokumen laporan di pengolah kata (Word)? Jelaskan keuntungannya!",
+                key: "Karena fitur Paste Link menciptakan tautan dinamis antara dokumen Word dan file sumber Excel. Keuntungannya: apabila terjadi perubahan atau pembaruan angka pada tabel Excel, maka tabel/grafik di dalam laporan Word akan otomatis ikut ter-update tanpa perlu menyalin dan menempel ulang secara manual, sehingga mengurangi risiko kesalahan data.",
+                rubric: "Skor 4: Menjelaskan konsep tautan dinamis dan keuntungan sinkronisasi otomatis secara jelas dan lengkap. | Skor 3: Menyebutkan grafik otomatis berubah jika data diubah namun penjelasan singkat. | Skor 2: Hanya menjelaskan fungsi copy-paste biasa. | Skor 1: Jawaban kurang tepat. | Skor 0: Tidak menjawab."
+            },
+            {
+                no: 7, bab: "Bab III", tp: "TP 8.3.2",
+                q: "Sebutkan dan jelaskan 3 komponen utama yang diperlukan untuk membuat surat massal menggunakan fitur Mail Merge!",
+                key: "1) Main Document (Dokumen Utama): File template dokumen (misalnya di Word) yang berisi teks tetap dan tata letak surat/kartu.\n2) Data Source (Sumber Data): File database atau tabel (misalnya di Excel) yang berisi daftar identitas penerima (nama, alamat, kelas).\n3) Merge Field: Penanda kolom (seperti <<Nama>>) yang disisipkan pada Main Document untuk menghubungkan posisi data dari Data Source.",
+                rubric: "Skor 4: Menyebutkan dan menjelaskan ketiga komponen (Main Document, Data Source, Merge Field) dengan tepat. | Skor 3: Menyebutkan 3 komponen namun hanya 2 yang dijelaskan tepat. | Skor 2: Hanya menyebutkan 2 komponen. | Skor 1: Hanya menyebutkan 1 komponen. | Skor 0: Tidak menjawab."
+            },
+            {
+                no: 8, bab: "Bab IV", tp: "TP 8.4.1",
+                q: "Jelaskan perbedaan sifat penyimpanan antara RAM dan Hard Disk/SSD, serta jelaskan 3 tahapan siklus kerja CPU (Fetch - Decode - Execute)!",
+                key: "• Perbedaan Memori: RAM bersifat volatile (sementara, data hilang saat listrik padam), sedangkan Hard Disk/SSD bersifat non-volatile (permanen, data tetap tersimpan meski komputer mati).\n• Siklus CPU: 1) Fetch: mengambil instruksi program dari memori; 2) Decode: menerjemahkan kode instruksi oleh Control Unit; 3) Execute: menjalankan/mengeksekusi instruksi oleh ALU atau komponen terkait.",
+                rubric: "Skor 4: Perbedaan volatile vs non-volatile benar dan ketiga tahapan Fetch-Decode-Execute dijelaskan dengan runtut. | Skor 3: Salah satu bagian penjelasan kurang lengkap. | Skor 2: Hanya menjawab perbedaan memori atau siklus CPU saja. | Skor 1: Menyebutkan istilah tanpa penjelasan. | Skor 0: Tidak menjawab."
+            },
+            {
+                no: 9, bab: "Bab IV", tp: "TP 8.4.2",
+                q: "Hitunglah nilai desimal dari bilangan heksadesimal 2F₁₆! Tuliskan langkah perhitungannya secara rinci!",
+                key: "Diketahui pada sistem Heksadesimal (basis 16), nilai huruf F = 15.\n2F₁₆ = (2 × 16¹) + (15 × 16⁰)\n     = (2 × 16) + (15 × 1)\n     = 32 + 15\n     = 47₁₀",
+                rubric: "Skor 4: Menuliskan nilai F = 15, langkah perpangkatan basis 16 benar, dan hasil akhir 47₁₀ tepat. | Skor 3: Hasil akhir 47 benar namun langkah kurang rinci. | Skor 2: Langkah benar namun salah hitung penjumlahan akhir. | Skor 1: Salah mengartikan nilai huruf F. | Skor 0: Tidak menjawab."
+            },
+            {
+                no: 10, bab: "Bab IV", tp: "TP 8.4.3",
+                q: "Sebutkan 3 langkah pencegahan yang harus dilakukan siswa agar data pribadi tetap aman saat terpaksa terhubung ke jaringan Wi-Fi publik gratis!",
+                key: "1) Memastikan situs web yang dibuka menggunakan protokol aman HTTPS (ikon gembok terkunci) agar data terenkripsi.\n2) Mengaktifkan autentikasi dua faktor (2FA) pada akun email dan media sosial.\n3) Tidak melakukan transaksi sensitif (seperti login perbankan/pembayaran) dan mematikan fitur berbagi file (File Sharing) saat terhubung di Wi-Fi publik.",
+                rubric: "Skor 4: Menyebutkan 3 langkah keamanan Wi-Fi publik yang logis, relevan, dan jelas. | Skor 3: Menyebutkan 2 langkah yang tepat. | Skor 2: Hanya menyebutkan 1 langkah yang tepat. | Skor 1: Jawaban terlalu umum (misal: 'hati-hati saja'). | Skor 0: Tidak menjawab."
+            }
+        ];
+
+        // -------------------------------------------------------------------------
+        // 3. NAVIGASI UTAMA & SUB-TAB BAB
+        // -------------------------------------------------------------------------
+        function switchMainTab(tabId) {
+            const tabs = ['materi', 'pg', 'uraian', 'kisikisi'];
+            tabs.forEach(t => {
+                const sec = document.getElementById(`section-${t}`);
+                const btn = document.getElementById(`nav-${t}`);
+                if (t === tabId) {
+                    sec.classList.remove('hidden');
+                    btn.classList.add('tab-active');
+                    btn.classList.remove('bg-white/10', 'hover:bg-white/20');
+                } else {
+                    sec.classList.add('hidden');
+                    btn.classList.remove('tab-active');
+                    btn.classList.add('bg-white/10', 'hover:bg-white/20');
+                }
+            });
+            lucide.createIcons();
+        }
+
+        function switchBab(babNum) {
+            for (let i = 1; i <= 4; i++) {
+                const content = document.getElementById(`content-bab-${i}`);
+                const btn = document.getElementById(`btn-bab-${i}`);
+                if (i === babNum) {
+                    content.classList.remove('hidden');
+                    btn.classList.add('subtab-active');
+                    btn.classList.remove('hover:bg-slate-50', 'text-slate-600');
+                } else {
+                    content.classList.add('hidden');
+                    btn.classList.remove('subtab-active');
+                    btn.classList.add('hover:bg-slate-50', 'text-slate-600');
+                }
+            }
+            lucide.createIcons();
+        }
+
+        // -------------------------------------------------------------------------
+        // 4. SIMULATOR BAB I: PAPAN KANBAN INTERAKTIF
+        // -------------------------------------------------------------------------
+        let kanbanTasks = [
+            { id: 1, text: "Identifikasi topik infografis", status: "done" },
+            { id: 2, text: "Cari referensi Society 5.0", status: "doing" },
+            { id: 3, text: "Desain poster & presentasi", status: "todo" }
+        ];
+
+        function renderKanban() {
+            const cols = ['todo', 'doing', 'done'];
+            cols.forEach(col => {
+                const listEl = document.getElementById(`list-${col}`);
+                const filtered = kanbanTasks.filter(t => t.status === col);
+                document.getElementById(`count-${col}`).textContent = filtered.length;
+                listEl.innerHTML = filtered.map(task => `
+                    <div class="bg-white p-2.5 rounded-lg border border-slate-200 shadow-xs flex items-center justify-between gap-2 text-xs">
+                        <span class="font-medium text-slate-800 ${col === 'done' ? 'line-through text-slate-400' : ''}">${task.text}</span>
+                        <div class="flex items-center gap-1 shrink-0">
+                            ${col !== 'todo' ? `<button onclick="moveKanban(${task.id}, -1)" title="Mundur" class="p-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-600">←</button>` : ''}
+                            ${col !== 'done' ? `<button onclick="moveKanban(${task.id}, 1)" title="Maju" class="p-1 rounded bg-indigo-100 hover:bg-indigo-200 text-indigo-700 font-bold">→</button>` : ''}
+                            <button onclick="deleteKanban(${task.id})" title="Hapus" class="p-1 rounded bg-rose-50 hover:bg-rose-100 text-rose-600">×</button>
+                        </div>
+                    </div>
+                `).join('') || `<div class="text-[11px] text-slate-400 italic text-center py-1">Kosong</div>`;
+            });
+        }
+
+        function addKanbanTask() {
+            const input = document.getElementById('kanban-input');
+            const val = input.value.trim();
+            if (!val) return;
+            kanbanTasks.push({ id: Date.now(), text: val, status: 'todo' });
+            input.value = '';
+            renderKanban();
+        }
+
+        function moveKanban(id, dir) {
+            const order = ['todo', 'doing', 'done'];
+            const task = kanbanTasks.find(t => t.id === id);
+            if (!task) return;
+            const nextIdx = order.indexOf(task.status) + dir;
+            if (nextIdx >= 0 && nextIdx < order.length) {
+                task.status = order[nextIdx];
+                renderKanban();
+            }
+        }
+
+        function deleteKanban(id) {
+            kanbanTasks = kanbanTasks.filter(t => t.id !== id);
+            renderKanban();
+        }
+
+        // -------------------------------------------------------------------------
+        // 5. SIMULATOR BAB II: MESIN FUNGSI, KONVERTER BILANGAN, STACK & QUEUE
+        // -------------------------------------------------------------------------
+        function runFunctionMachine() {
+            const formula = document.getElementById('func-formula').value;
+            const x = parseFloat(document.getElementById('func-input').value) || 0;
+            let out = 0;
+            let steps = '';
+
+            if (formula === 'linear') {
+                out = 3 * x + 2;
+                steps = `f(${x}) = 3(${x}) + 2 = ${3 * x} + 2 = ${out}`;
+            } else {
+                out = 2 * (x * x) - 3;
+                steps = `g(${x}) = 2(${x}²) - 3 = 2(${x * x}) - 3 = ${2 * x * x} - 3 = ${out}`;
+            }
+
+            document.getElementById('fm-in').textContent = x;
+            document.getElementById('fm-out').textContent = out;
+            document.getElementById('fm-steps').textContent = steps;
+        }
+
+        function setDecSample(val) {
+            document.getElementById('dec-input').value = val;
+            convertNumberSteps();
+        }
+
+        function convertNumberSteps() {
+            let num = parseInt(document.getElementById('dec-input').value, 10);
+            if (isNaN(num) || num < 0) num = 0;
+            if (num > 9999) num = 9999;
+
+            document.getElementById('res-biner').textContent = num.toString(2);
+            document.getElementById('res-oktal').textContent = num.toString(8);
+
+            const stepsEl = document.getElementById('conversion-steps');
+            if (num === 0) {
+                stepsEl.innerHTML = `<div>0 : 2 = 0 sisa 0 → Biner: 0</div><div>0 : 8 = 0 sisa 0 → Oktal: 0</div>`;
+                return;
+            }
+
+            let html = `<div class="font-bold text-indigo-700">[Biner - Bagi 2]</div>`;
+            let temp = num;
+            let binRems = [];
+            while (temp > 0) {
+                const q = Math.floor(temp / 2);
+                const r = temp % 2;
+                binRems.push(r);
+                html += `<div>${temp} ÷ 2 = ${q} <span class="text-indigo-600 font-bold">sisa ${r}</span></div>`;
+                temp = q;
+            }
+            html += `<div class="text-indigo-900 font-bold mb-2">↑ Baca sisa dari bawah: ${binRems.reverse().join('')}₂</div>`;
+
+            html += `<div class="font-bold text-teal-700">[Oktal - Bagi 8]</div>`;
+            temp = num;
+            let octRems = [];
+            while (temp > 0) {
+                const q = Math.floor(temp / 8);
+                const r = temp % 8;
+                octRems.push(r);
+                html += `<div>${temp} ÷ 8 = ${q} <span class="text-teal-600 font-bold">sisa ${r}</span></div>`;
+                temp = q;
+            }
+            html += `<div class="text-teal-900 font-bold">↑ Baca sisa dari bawah: ${octRems.reverse().join('')}₈</div>`;
+            stepsEl.innerHTML = html;
+        }
+
+        // Stack & Queue Simulator
+        let stackArr = ['Data-1', 'Data-2'];
+        let queueArr = ['Doc-1', 'Doc-2'];
+        let sqCounter = 3;
+
+        function renderStackQueue() {
+            const stackEl = document.getElementById('stack-visual');
+            stackEl.innerHTML = stackArr.map((item, idx) => `
+                <div class="w-full py-1 px-2 text-center rounded text-[11px] font-mono font-bold ${idx === stackArr.length - 1 ? 'bg-amber-500 text-white shadow-xs' : 'bg-amber-100 text-amber-900'}">
+                    ${item} ${idx === stackArr.length - 1 ? '(TOP / Keluar Duluan)' : ''}
+                </div>
+            `).join('') || `<div class="text-[11px] text-slate-400 py-4">Stack Kosong</div>`;
+
+            const queueEl = document.getElementById('queue-visual');
+            queueEl.innerHTML = queueArr.map((item, idx) => `
+                <div class="px-2.5 py-1 rounded text-[11px] font-mono font-bold whitespace-nowrap ${idx === 0 ? 'bg-sky-600 text-white shadow-xs' : 'bg-sky-100 text-sky-900'}">
+                    ${idx === 0 ? 'FRONT: ' : ''}${item}
+                </div>
+            `).join('') || `<div class="text-[11px] text-slate-400">Queue Kosong</div>`;
+        }
+
+        function pushStack() {
+            if (stackArr.length >= 4) {
+                document.getElementById('sq-status').textContent = "Stack penuh (maksimal 4 balok visual)!";
+                return;
+            }
+            const label = `Data-${sqCounter++}`;
+            stackArr.push(label);
+            document.getElementById('sq-status').textContent = `Push(${label}): Masuk ke posisi paling atas (TOP).`;
+            renderStackQueue();
+        }
+
+        function popStack() {
+            if (stackArr.length === 0) {
+                document.getElementById('sq-status').textContent = "Stack sudah kosong (Underflow)!";
+                return;
+            }
+            const removed = stackArr.pop();
+            document.getElementById('sq-status').textContent = `Pop(): ${removed} (yang terakhir masuk) keluar duluan (LIFO).`;
+            renderStackQueue();
+        }
+
+        function enqueueData() {
+            if (queueArr.length >= 4) {
+                document.getElementById('sq-status').textContent = "Antrean Queue penuh (maksimal 4)!";
+                return;
+            }
+            const label = `Doc-${sqCounter++}`;
+            queueArr.push(label);
+            document.getElementById('sq-status').textContent = `Enqueue(${label}): Masuk dari belakang antrean (REAR).`;
+            renderStackQueue();
+        }
+
+        function dequeueData() {
+            if (queueArr.length === 0) {
+                document.getElementById('sq-status').textContent = "Antrean Queue sudah kosong!";
+                return;
+            }
+            const removed = queueArr.shift();
+            document.getElementById('sq-status').textContent = `Dequeue(): ${removed} (yang pertama masuk) dilayani duluan (FIFO).`;
+            renderStackQueue();
+        }
+
+        // -------------------------------------------------------------------------
+        // 6. SIMULATOR BAB III: MINI MAIL MERGE
+        // -------------------------------------------------------------------------
+        const mailMergeData = [
+            { no: "VIII-001", nama: "Ahmad Zaki", kelas: "VIII-A" },
+            { no: "VIII-002", nama: "Siti Aisyah", kelas: "VIII-A" },
+            { no: "VIII-003", nama: "Muhammad Rizky", kelas: "VIII-B" },
+            { no: "VIII-004", nama: "Fatimah Azzahra", kelas: "VIII-C" }
+        ];
+        let selectedMmIndex = 0;
+
+        function renderMailMerge() {
+            const tbody = document.getElementById('mailmerge-table');
+            tbody.innerHTML = mailMergeData.map((row, idx) => `
+                <tr onclick="selectMailMerge(${idx})" class="cursor-pointer transition-colors ${idx === selectedMmIndex ? 'bg-amber-100 font-bold text-indigo-950' : 'hover:bg-slate-50 text-slate-700'}">
+                    <td class="p-2 font-mono">${row.no}</td>
+                    <td class="p-2">${row.nama}</td>
+                    <td class="p-2">${row.kelas}</td>
+                </tr>
+            `).join('');
+
+            const active = mailMergeData[selectedMmIndex];
+            document.getElementById('mm-preview-no').textContent = active.no;
+            document.getElementById('mm-preview-nama').textContent = active.nama;
+            document.getElementById('mm-preview-kelas').textContent = active.kelas;
+        }
+
+        function selectMailMerge(idx) {
+            selectedMmIndex = idx;
+            renderMailMerge();
+        }
+
+        // -------------------------------------------------------------------------
+        // 7. SIMULATOR BAB IV: GERBANG LOGIKA INTERAKTIF (AND, OR, NOT)
+        // -------------------------------------------------------------------------
+        let currentGate = 'AND';
+        let logicA = 0;
+        let logicB = 0;
+
+        function setGate(gate) {
+            currentGate = gate;
+            ['AND', 'OR', 'NOT'].forEach(g => {
+                const btn = document.getElementById(`gate-btn-${g}`);
+                if (g === gate) {
+                    btn.className = "py-2 rounded-xl text-xs font-extrabold bg-rose-600 text-white shadow";
+                } else {
+                    btn.className = "py-2 rounded-xl text-xs font-extrabold bg-slate-100 text-slate-700 hover:bg-slate-200";
+                }
+            });
+            document.getElementById('row-in-B').style.display = (gate === 'NOT') ? 'none' : 'flex';
+            document.getElementById('gate-badge').textContent = gate;
+            document.getElementById('tt-title').textContent = gate;
+            updateLogicSimulator();
+        }
+
+        function toggleLogicInput(which) {
+            if (which === 'A') logicA = logicA === 0 ? 1 : 0;
+            if (which === 'B') logicB = logicB === 0 ? 1 : 0;
+            updateLogicSimulator();
+        }
+
+        function updateLogicSimulator() {
+            const btnA = document.getElementById('btn-in-A');
+            const btnB = document.getElementById('btn-in-B');
+            btnA.textContent = logicA;
+            btnA.className = `w-12 py-1.5 rounded-lg font-mono font-extrabold text-sm border transition-all ${logicA === 1 ? 'bg-emerald-500 text-white border-emerald-400' : 'bg-slate-700 text-slate-300 border-slate-600'}`;
+
+            btnB.textContent = logicB;
+            btnB.className = `w-12 py-1.5 rounded-lg font-mono font-extrabold text-sm border transition-all ${logicB === 1 ? 'bg-emerald-500 text-white border-emerald-400' : 'bg-slate-700 text-slate-300 border-slate-600'}`;
+
+            let out = 0;
+            if (currentGate === 'AND') out = (logicA === 1 && logicB === 1) ? 1 : 0;
+            else if (currentGate === 'OR') out = (logicA === 1 || logicB === 1) ? 1 : 0;
+            else if (currentGate === 'NOT') out = (logicA === 0) ? 1 : 0;
+
+            const lamp = document.getElementById('logic-lamp');
+            const outText = document.getElementById('logic-out-text');
+            if (out === 1) {
+                lamp.className = "w-12 h-12 rounded-full bg-amber-400 border-2 border-amber-200 shadow-[0_0_20px_rgba(251,191,36,0.8)] flex items-center justify-center transition-all text-slate-900";
+                outText.textContent = "OUT: 1 (NYALA)";
+                outText.className = "text-xs font-mono font-extrabold mt-1 text-amber-300";
+            } else {
+                lamp.className = "w-12 h-12 rounded-full bg-slate-800 border-2 border-slate-600 flex items-center justify-center transition-all text-slate-500";
+                outText.textContent = "OUT: 0 (MATI)";
+                outText.className = "text-xs font-mono font-extrabold mt-1 text-slate-400";
+            }
+
+            // Render Truth Table
+            const ttHead = document.getElementById('tt-head');
+            const ttBody = document.getElementById('tt-body');
+            if (currentGate === 'NOT') {
+                ttHead.innerHTML = `<tr><th class="p-1.5">Input A</th><th class="p-1.5">Output (NOT A)</th></tr>`;
+                const rows = [[0, 1], [1, 0]];
+                ttBody.innerHTML = rows.map(r => `
+                    <tr class="${r[0] === logicA ? 'bg-rose-100 font-bold text-rose-900' : ''}">
+                        <td class="p-1.5">${r[0]}</td><td class="p-1.5">${r[1]}</td>
+                    </tr>
+                `).join('');
+            } else {
+                ttHead.innerHTML = `<tr><th class="p-1.5">Input A</th><th class="p-1.5">Input B</th><th class="p-1.5">Output (${currentGate})</th></tr>`;
+                const rows = [
+                    [0, 0, 0],
+                    [0, 1, currentGate === 'OR' ? 1 : 0],
+                    [1, 0, currentGate === 'OR' ? 1 : 0],
+                    [1, 1, 1]
+                ];
+                ttBody.innerHTML = rows.map(r => `
+                    <tr class="${(r[0] === logicA && r[1] === logicB) ? 'bg-rose-100 font-bold text-rose-900' : ''}">
+                        <td class="p-1.5">${r[0]}</td><td class="p-1.5">${r[1]}</td><td class="p-1.5">${r[2]}</td>
+                    </tr>
+                `).join('');
+            }
+        }
+
+        // -------------------------------------------------------------------------
+        // 8. LOGIKA LATIHAN SOAL PILIHAN GANDA (40 SOAL)
+        // -------------------------------------------------------------------------
+        let userPgAnswers = {}; // { no: 'A'|'B'|'C'|'D' }
+        let pgMode = 'latihan'; // 'latihan' | 'ujian'
+        let ujianSubmitted = false;
+        let currentPgFilter = 'ALL';
+
+        function setPgMode(mode) {
+            pgMode = mode;
+            ujianSubmitted = false;
+            const btnLat = document.getElementById('mode-latihan');
+            const btnUji = document.getElementById('mode-ujian');
+            const submitBar = document.getElementById('ujian-submit-bar');
+
+            if (mode === 'latihan') {
+                btnLat.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-indigo-600 text-white shadow-sm transition-all";
+                btnUji.className = "px-3 py-1.5 rounded-lg text-xs font-bold text-slate-600 hover:text-slate-900 transition-all";
+                submitBar.classList.add('hidden');
+            } else {
+                btnUji.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-indigo-600 text-white shadow-sm transition-all";
+                btnLat.className = "px-3 py-1.5 rounded-lg text-xs font-bold text-slate-600 hover:text-slate-900 transition-all";
+                submitBar.classList.remove('hidden');
+            }
+            renderPgQuestions();
+            updateScoreSummary();
+        }
+
+        function filterPgBab(babVal) {
+            currentPgFilter = babVal;
+            document.querySelectorAll('.pg-filter-btn').forEach(btn => {
+                btn.className = "pg-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200";
+            });
+            const activeBtn = document.getElementById(`filter-${babVal}`);
+            if (activeBtn) {
+                activeBtn.className = "pg-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-indigo-600 text-white";
+            }
+            renderPgQuestions();
+        }
+
+        function selectPgOption(no, optKey) {
+            if (pgMode === 'ujian' && ujianSubmitted) return;
+            userPgAnswers[no] = optKey;
+            renderPgQuestions();
+            updateScoreSummary();
+        }
+
+        function submitUjianPg() {
+            ujianSubmitted = true;
+            renderPgQuestions();
+            updateScoreSummary();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function resetPgAnswers() {
+            userPgAnswers = {};
+            ujianSubmitted = false;
+            renderPgQuestions();
+            updateScoreSummary();
+        }
+
+        function renderPgQuestions() {
+            const container = document.getElementById('pg-questions-container');
+            const filtered = currentPgFilter === 'ALL'
+                ? pgQuestions
+                : pgQuestions.filter(item => item.bab === currentPgFilter);
+
+            const babColors = {
+                1: 'bg-indigo-100 text-indigo-700',
+                2: 'bg-teal-100 text-teal-700',
+                3: 'bg-amber-100 text-amber-800',
+                4: 'bg-rose-100 text-rose-700'
+            };
+
+            container.innerHTML = filtered.map(item => {
+                const selected = userPgAnswers[item.no];
+                const showFeedback = (pgMode === 'latihan' && selected) || (pgMode === 'ujian' && ujianSubmitted);
+
+                const optionsHtml = Object.entries(item.options).map(([key, text]) => {
+                    let btnStyle = "border-slate-200 hover:border-indigo-400 hover:bg-indigo-50/40 text-slate-700";
+                    let badgeStyle = "bg-slate-100 text-slate-700";
+
+                    if (showFeedback) {
+                        if (key === item.ans) {
+                            btnStyle = "border-emerald-500 bg-emerald-50 text-emerald-950 font-semibold";
+                            badgeStyle = "bg-emerald-600 text-white";
+                        } else if (selected === key && key !== item.ans) {
+                            btnStyle = "border-rose-500 bg-rose-50 text-rose-950";
+                            badgeStyle = "bg-rose-600 text-white";
+                        } else {
+                            btnStyle = "border-slate-200 opacity-65 text-slate-500";
+                        }
+                    } else if (selected === key) {
+                        btnStyle = "border-indigo-600 bg-indigo-50 text-indigo-950 font-semibold ring-1 ring-indigo-600";
+                        badgeStyle = "bg-indigo-600 text-white";
+                    }
+
+                    return `
+                        <button onclick="selectPgOption(${item.no}, '${key}')" class="w-full text-left p-3 rounded-xl border transition-all flex items-start gap-3 ${btnStyle}">
+                            <span class="w-6 h-6 rounded-lg text-xs font-extrabold flex items-center justify-center shrink-0 mt-0.5 ${badgeStyle}">${key}</span>
+                            <span class="text-xs sm:text-sm leading-relaxed">${text}</span>
+                        </button>
+                    `;
+                }).join('');
+
+                const feedbackHtml = showFeedback ? `
+                    <div class="mt-3 p-3.5 rounded-xl text-xs ${selected === item.ans ? 'bg-emerald-50 border border-emerald-200 text-emerald-900' : 'bg-amber-50 border border-amber-200 text-amber-950'}">
+                        <div class="font-extrabold flex items-center gap-1.5 mb-1">
+                            ${selected === item.ans
+                                ? '<span class="text-emerald-700">✓ Jawaban Benar! (+1,5 Poin)</span>'
+                                : `<span class="text-rose-700">✗ ${selected ? 'Jawaban Kurang Tepat.' : 'Tidak Dijawab.'} Kunci Jawaban: ${item.ans}</span>`}
+                        </div>
+                        <p class="leading-relaxed text-slate-700"><strong>Pembahasan:</strong> ${item.exp}</p>
+                    </div>
+                ` : '';
+
+                return `
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
+                        <div class="flex items-center justify-between gap-2 mb-2.5">
+                            <div class="flex items-center gap-2">
+                                <span class="px-2.5 py-1 rounded-lg bg-slate-900 text-white font-mono text-xs font-bold">Soal #${item.no}</span>
+                                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold ${babColors[item.bab]}">Bab ${['','I','II','III','IV'][item.bab]}</span>
+                            </div>
+                            <span class="text-[11px] font-semibold text-slate-400">Bobot: 1,5 Poin</span>
+                        </div>
+                        <p class="text-sm font-semibold text-slate-900 whitespace-pre-line leading-relaxed mb-3.5">${item.q}</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+                            ${optionsHtml}
+                        </div>
+                        ${feedbackHtml}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // -------------------------------------------------------------------------
+        // 9. LOGIKA LATIHAN SOAL URAIAN (10 SOAL) & KALKULATOR NILAI AKHIR
+        // -------------------------------------------------------------------------
+        let essaySelfScores = {}; // { 1: 0..4, ..., 10: 0..4 }
+
+        function renderEssayQuestions() {
+            const container = document.getElementById('uraian-questions-container');
+            container.innerHTML = essayQuestions.map(item => `
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 space-y-3">
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                        <div class="flex items-center gap-2">
+                            <span class="px-2.5 py-1 rounded-lg bg-indigo-900 text-white font-mono text-xs font-bold">Uraian #${item.no}</span>
+                            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-indigo-100 text-indigo-700">${item.bab} • ${item.tp}</span>
+                        </div>
+                        <span class="text-[11px] font-bold text-slate-500">Maksimal 4 Poin</span>
+                    </div>
+
+                    <p class="text-sm font-semibold text-slate-900 leading-relaxed">${item.q}</p>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Jawaban Kamu:</label>
+                        <textarea rows="3" placeholder="Ketik jawaban uraianmu di sini sebelum membuka kunci jawaban..." class="w-full text-xs sm:text-sm p-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-slate-50/50"></textarea>
+                    </div>
+
+                    <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+                        <button onclick="toggleEssayKey(${item.no})" id="btn-key-${item.no}" class="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold shadow-xs transition-colors flex items-center gap-1.5">
+                            <i data-lucide="eye" class="w-4 h-4"></i> Lihat Kunci Jawaban & Pedoman Skor
+                        </button>
+
+                        <!-- Input Skor Mandiri -->
+                        <div class="flex items-center gap-1.5 bg-slate-100 px-3 py-1.5 rounded-xl border border-slate-200">
+                            <span class="text-xs font-bold text-slate-700 mr-1">Nilai Mandiri:</span>
+                            ${[0, 1, 2, 3, 4].map(sc => `
+                                <button onclick="setEssayScore(${item.no}, ${sc})" id="es-btn-${item.no}-${sc}" class="w-7 h-7 rounded-lg text-xs font-mono font-bold transition-all ${essaySelfScores[item.no] === sc ? 'bg-indigo-600 text-white shadow' : 'bg-white text-slate-700 hover:bg-indigo-50 border border-slate-200'}">
+                                    ${sc}
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- Panel Kunci Jawaban & Rubrik (Hidden by default) -->
+                    <div id="essay-key-box-${item.no}" class="hidden mt-3 p-4 rounded-xl bg-emerald-50/80 border border-emerald-200 space-y-2 text-xs">
+                        <div class="font-extrabold text-emerald-900">✓ Kunci Jawaban Ideal:</div>
+                        <div class="text-slate-800 whitespace-pre-line leading-relaxed bg-white p-3 rounded-lg border border-emerald-100">${item.key}</div>
+                        <div class="font-extrabold text-indigo-900 pt-1">📋 Rubrik Penskoran (0 – 4):</div>
+                        <div class="text-slate-700 leading-relaxed">${item.rubric}</div>
+                    </div>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        function toggleEssayKey(no) {
+            const box = document.getElementById(`essay-key-box-${no}`);
+            const btn = document.getElementById(`btn-key-${no}`);
+            if (box.classList.contains('hidden')) {
+                box.classList.remove('hidden');
+                btn.innerHTML = `<i data-lucide="eye-off" class="w-4 h-4"></i> Sembunyikan Kunci & Rubrik`;
+            } else {
+                box.classList.add('hidden');
+                btn.innerHTML = `<i data-lucide="eye" class="w-4 h-4"></i> Lihat Kunci Jawaban & Pedoman Skor`;
+            }
+            lucide.createIcons();
+        }
+
+        function setEssayScore(no, score) {
+            essaySelfScores[no] = score;
+            for (let s = 0; s <= 4; s++) {
+                const btn = document.getElementById(`es-btn-${no}-${s}`);
+                if (s === score) {
+                    btn.className = "w-7 h-7 rounded-lg text-xs font-mono font-bold transition-all bg-indigo-600 text-white shadow";
+                } else {
+                    btn.className = "w-7 h-7 rounded-lg text-xs font-mono font-bold transition-all bg-white text-slate-700 hover:bg-indigo-50 border border-slate-200";
+                }
+            }
+            updateScoreSummary();
+        }
+
+        // -------------------------------------------------------------------------
+        // 10. KALKULATOR SKOR GABUNGAN (PG + URAIAN) & INDIKATOR KKTP (75)
+        // -------------------------------------------------------------------------
+        function updateScoreSummary() {
+            const answeredCount = Object.keys(userPgAnswers).length;
+            let correctCount = 0;
+            pgQuestions.forEach(q => {
+                if (userPgAnswers[q.no] === q.ans) correctCount++;
+            });
+
+            // Jika mode ujian dan belum disubmit, sembunyikan skor benar sementara
+            const showPgScore = (pgMode === 'latihan') || (pgMode === 'ujian' && ujianSubmitted);
+            const pgPoints = showPgScore ? (correctCount * 1.5) : 0;
+
+            document.getElementById('pg-answered-count').textContent = `${answeredCount}/40`;
+            document.getElementById('pg-correct-count').textContent = showPgScore ? correctCount : '?';
+            document.getElementById('pg-score-val').textContent = showPgScore ? pgPoints.toFixed(1) : '?';
+
+            // Hitung skor uraian (maks 40)
+            let essayPoints = 0;
+            Object.values(essaySelfScores).forEach(val => {
+                essayPoints += val;
+            });
+
+            const totalFinal = pgPoints + essayPoints;
+            document.getElementById('calc-pg-score').textContent = pgPoints.toFixed(1);
+            document.getElementById('calc-essay-score').textContent = essayPoints;
+            document.getElementById('calc-total-score').textContent = totalFinal.toFixed(1);
+
+            const kktpBox = document.getElementById('calc-kktp-box');
+            const kktpStatus = document.getElementById('calc-kktp-status');
+            if (totalFinal >= 75) {
+                kktpBox.className = "bg-emerald-500/25 border border-emerald-400/50 rounded-xl p-3 text-center flex flex-col justify-center";
+                kktpStatus.className = "text-xs font-extrabold text-emerald-300 mt-0.5";
+                kktpStatus.textContent = "TUNTAS (≥ 75)";
+            } else {
+                kktpBox.className = "bg-rose-500/20 border border-rose-400/40 rounded-xl p-3 text-center flex flex-col justify-center";
+                kktpStatus.className = "text-xs font-extrabold text-rose-300 mt-0.5";
+                kktpStatus.textContent = "Belum Tuntas";
+            }
+        }
+
+        // -------------------------------------------------------------------------
+        // INISIALISASI SAAT HALAMAN DIMUAT
+        // -------------------------------------------------------------------------
+        window.addEventListener('DOMContentLoaded', () => {
+            renderKanban();
+            runFunctionMachine();
+            convertNumberSteps();
+            renderStackQueue();
+            renderMailMerge();
+            updateLogicSimulator();
+            renderPgQuestions();
+            renderEssayQuestions();
+            updateScoreSummary();
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>
